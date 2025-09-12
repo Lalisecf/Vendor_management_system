@@ -1,0 +1,8 @@
+.modal-xl {
+  max-width: 96%;
+}
+
+#contracts_table.table-bordered {
+  border: 0.1px #050505;
+  /* Adjust thickness and color */
+}

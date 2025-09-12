@@ -1,0 +1,70 @@
+.leftside-menu-header-h1 {
+  /* background-color: white; */
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+
+.leftside-menu-header-h1 :hover {
+  /* background-color: white; */
+  color: white;
+}
+
+@media (max-width: 1090px) {
+  .side-items {
+    background-color: #f00 !important;
+    display: none;
+  }
+}
+
+@media (max-width: 510px) {
+  .side-items {
+    background-color: #f00 !important;
+    display: none;
+  }
+}
+
+span:hover {
+  color: orange;
+}
+
+.icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #3b7ddd;
+  /* Example blue color */
+  margin-right: 12px;
+}
+
+.icon-circle .mdi {
+  color: white;
+  font-size: 1.2rem;
+}
+
+/* Optional hover effects */
+.icon-circle {
+  transition: transform 0.2s ease;
+}
+
+.side-nav-link:hover .icon-circle {
+  transform: scale(1.1);
+  background-color: #2f64b6;
+  /* Darker blue on hover */
+}
+.badge {
+  background-color: red;
+  color: white;
+  padding: 1px 2px;
+  border-radius: 5px;
+  font-size: 10px;
+  margin-left: 1px;
+  display: inline-block;
+}
+
+/* .leftside-menu{
+  background-color: #f00;
+} */

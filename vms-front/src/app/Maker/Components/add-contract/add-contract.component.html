@@ -1,0 +1,725 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <app-navigator-upper></app-navigator-upper>
+            <h4 *ngIf="contract_id == null" class="page-title">Register Contract</h4>
+            <h4 *ngIf="contract_id != null" class="page-title">Update Contract</h4>
+            <div class="card">
+                <div class="card-body">
+                    <div class="continer">
+
+
+                        <table datatable [dtOptions]="dtOptions_currentContract" id="current_contract"
+                            class="table table-bordered dt-responsive nowrap w-100">
+                        </table>
+
+
+                        <div class="row">
+                            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+                                <div *ngIf="currentStep === 1">
+                                    <div class="container text-center" style="max-width: 100%; margin: auto;">
+                                        <h3 class="bg-primary text-yellow p-2 rounded shadow">
+                                            Please Fill in Basic Contract Details
+                                        </h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-sm-12">
+                                            <label for="renewal_termination_option" class="form-label">
+                                                <b>Contract title </b> <span style="color: red;">*</span>
+                                            </label>
+                                            <div class="form-group mt-10">
+                                                <quill-editor [placeholder]="'Contract title'"
+                                                    formControlName="contract_title" style="width:100%"></quill-editor>
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['contract_title'].errors?.['required']">
+                                            Please fill contract title.
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="mb-3 col-sm-4">
+                                            <label for="vendor" class="form-label">
+                                                <b>Vendor </b> <span style="color: red;">*</span>
+                                            </label>
+                                            <div class="form-group">
+                                                <select formControlName="vendor_name" class="form-select"
+                                                    (change)="onVendorSelectionChange()">
+                                                    <option *ngFor="let vendor of vendor" [value]="vendor.id">{{
+                                                        vendor.name }}</option>
+                                                </select>
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['vendor_name'].errors?.['required']">
+                                                Please Select Vendor.
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-sm-4">
+                                            <label for="contract_type" class="form-label">
+                                                <b>Type of contract </b> <span style="color: red;">*</span>
+                                            </label>
+                                            <div class="form-group">
+                                                <select class="form-select" formControlName="contract_type"
+                                                    (change)="contracttypeChange($event)">
+                                                    <option *ngFor="let type of ContractTypes" [value]="type.name">
+                                                        {{ type.name }}
+
+                                                    </option>
+                                                    <!-- <option value="Project Contract">Project Contract</option>
+                                                    <option value="SLA">Service Level Agreement</option>
+                                                    <option value="AMC">Anual Maintainance Contract</option>
+                                                    <option value="licence contract">Licence Contract</option> --> -->
+                                                </select>
+                                                <!-- <div class="valid-feedback"
+                                                    *ngIf="submitted && registerForm.controls['contract_type'].valid">
+                                                    Looks good!
+                                                </div> -->
+                                                <!-- <div class="invalid-feedback"
+                                                    *ngIf="submitted && registerForm.controls['contract_type'].errors?.['required']">
+                                                    Please enter name of the vendor.
+                                                </div> -->
+
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['contract_type'].errors?.['required']">
+                                                Please Select Contract Type.
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="mb-3 col-sm-4">
+                                            <div class="form-group">
+
+                                                <label for="service" class="form-label"><b>Service</b></label>
+                                                <ng-multiselect-dropdown formControlName="service"
+                                                    [placeholder]="'Select Service'" [data]="serviceList"
+                                                    [(ngModel)]="selectedServices" [settings]="serviceDropdownSettings">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- 
+                                        <div class="mb-3 col-sm-4">
+                                            <div class="form-group">
+
+                                                <label for="product" class="form-label"><b>Product</b></label>
+                                                <ng-multiselect-dropdown formControlName="product"
+                                                    [placeholder]="'Select product'" [data]="productList"
+                                                    [(ngModel)]="selectedProducts" [settings]="ProductDropdownSettings">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf="selectedServices.length < 0 && selectedProducts.length < 0">
+
+                                                Please Select Either Product or Service,or both of them.
+                                            </div>
+                                        </div> -->
+
+
+                                        <div class="mb-3 col-sm-4">
+                                            <label for="directorate" class="form-label">
+                                                <b>Directorate </b> <span style="color: red;">*</span>
+                                            </label>
+                                            <div class="form-group">
+                                                <select class="form-select" formControlName="directorate"
+                                                    (change)="changeDirectorate($event)">
+                                                    <option *ngFor="let directorateName of Directorates"
+                                                        [value]="directorateName.name">
+                                                        {{ directorateName.name }}
+
+                                                    </option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                                <!-- <div class="valid-feedback"
+                                                    *ngIf="submitted && registerForm.controls['contract_type'].valid">
+                                                    Looks good!
+                                                </div> -->
+                                                <!-- <div class="invalid-feedback"
+                                                    *ngIf="submitted && registerForm.controls['contract_type'].errors?.['required']">
+                                                    Please enter name of the vendor.
+                                                </div> -->
+
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['directorates'].errors?.['required']">
+                                                Please Select directorate.
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="mb-3 col-sm-4">
+                                            <div class="form-group"
+                                                *ngIf="selectedServices.length < 0 && selectedProducts.length < 0">
+
+                                                Please Select Either Product or Service,or both of them.
+                                            </div>
+                                        </div> -->
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-sm-3">
+                                            <label for="start_date" class="form-label">
+                                                <b>Contract start date </b> <span style="color: red;">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <input type="text" placeholder="contrat start date" class="form-control"
+                                                    autocomplete="off" id="floatingInput" bsDatepicker
+                                                    formControlName="start_date"
+                                                    [bsConfig]="{adaptivePosition: true, dateInputFormat: 'DD/MM/YYYY' }"
+                                                    [maxDate]="maxDate" />
+                                                <!-- <label for="floatingInput">Transaction Date</label> -->
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['start_date'].errors?.['required']">
+                                                Please Entere Contract Start Date.
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-sm-3">
+                                            <label for="location" class="form-label">
+                                                <b>Contract end date </b> <span style="color: red;">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <input type="text" placeholder="contrat end date" class="form-control"
+                                                    autocomplete="off" id="floatingInput" bsDatepicker
+                                                    formControlName="end_date"
+                                                    [bsConfig]="{adaptivePosition: true, dateInputFormat: 'DD/MM/YYYY' }" />
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['end_date'].errors?.['required']">
+                                                Please Entere Contract End Date.
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-sm-3">
+                                            <label for="industry" class="form-label">
+                                                <b>Total Amount </b> <span style="color: red;">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" id="total_amount"
+                                                    formControlName="total_amount" placeholder="Total amount of contrat"
+                                                    autocomplete="off" appCommaSeparate />
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['total_amount'].errors?.['required']">
+                                                Please Entere Contract Total Amount.
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-sm-3">
+                                            <label for="currency" class="form-label">
+                                                <b>Currency </b> <span style="color: red;">*</span>
+                                            </label>
+                                            <div class="input-group">
+                                                <select class="form-select" formControlName="currency">
+                                                    <!-- <option value="aaaaaaa" selected>Please select menu</option> -->
+                                                    <option value="ETB">ETB</option>
+                                                    <option value="EURO">EURO</option>
+                                                    <option value="GBP">GBP</option>
+                                                    <option value="USD">USD</option>
+                                                </select>
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['currency'].errors?.['required']">
+                                                Please Select Currency.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="mb-3 col-sm-12">
+                                            <label for="renewal_termination_option" class="form-label">
+                                                <b> Renewal and Termination options </b> <span
+                                                    style="color: red;">*</span>
+                                            </label>
+                                            <div class="form-group mt-10">
+                                                <quill-editor [placeholder]="'any renewal and termination options'"
+                                                    formControlName="renewal_termination_option"
+                                                    style="width:100%"></quill-editor>
+                                            </div>
+                                        </div>
+
+                                    </div> -->
+
+                                    <!-- <div class="row">
+                                        <div class="mb-3 col-sm-6">
+
+                                            <label for="general_document" class="form-label">
+                                                <b>Security Document </b>
+                                            </label>
+
+                                            <div class="form-floating">
+                                                <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload"
+                                                    accept="application/pdf" [processDirectoryDrop]="false" [ngClass]="{
+                                                'light-ngx-dropzone':
+                                                  this.localStorageService.retrieve('theme').trim() ==
+                                                  'light'.trim(),
+                                                'dark-ngx-dropzone':
+                                                  this.localStorageService.retrieve('theme').trim() !=
+                                                  'light'.trim()
+                                              }" (change)="onSecurityFileSelect($event)" [multiple]="true"
+                                                    [maxFileSize]="8000000">
+                                                    <ngx-dropzone-label>
+                                                        <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                        <h3>Select file.</h3>
+                                                        <span class="text-muted font-13">Attach security document
+
+                                                        </span>
+                                                    </ngx-dropzone-label>
+                                                    <ngx-dropzone-preview *ngFor="let f of securityDocument"
+                                                        [removable]="true"
+                                                        (removed)="onRemoveSecurityDocument(securityDocument)">
+                                                        <ngx-dropzone-label>{{
+                                                            securityDocument.at(0)!.name
+                                                            }}</ngx-dropzone-label>
+                                                    </ngx-dropzone-preview>
+                                                </ngx-dropzone>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-sm-6">
+                                            <label for="example-textarea" class="form-label">
+                                                <b>Document description</b>
+                                            </label>
+                                            <textarea class="form-control" id="example-textarea" rows="5"
+                                                formControlName="security_document_descreption"
+                                                placeholder="Security description if any..."
+                                                autocomplete="off"></textarea>
+                                        </div>
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="mb-3 col-sm-6 mt-4">
+                                            <div>
+                                                <label for="gender" class="form-label"><b>Is total amount including
+                                                        VAT?</b></label>
+                                                <div class="mt-1">
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" id="customRadio3" value="Yes" name="vat"
+                                                            formControlName="vat" class="form-check-input" />
+                                                        <label class="form-check-label" for="customRadio3">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" id="customRadio4" value="No" name="vat"
+                                                            formControlName="vat" class="form-check-input" checked />
+                                                        <label class="form-check-label" for="customRadio4">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <label for="gender" class="form-label"><b>Does the contract have
+                                                        SLA/Support?</b></label>
+                                                <div class="mt-1">
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" id="customRadio5" value="Yes" name="sla"
+                                                            formControlName="sla" class="form-check-input" />
+                                                        <label class="form-check-label" for="customRadio5">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" id="customRadio6" value="No" name="sla"
+                                                            formControlName="sla" class="form-check-input" checked />
+                                                        <label class="form-check-label" for="customRadio6">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="mb-3 col-sm-6">
+                                            <label for="general_document" class="form-label">Contract Document
+                                            </label>
+                                            <div class="form-floating">
+                                                <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload"
+                                                    accept="application/pdf" [processDirectoryDrop]="false" [ngClass]="{
+                                                    'light-ngx-dropzone':
+                                                      this.localStorageService.retrieve('theme').trim() ==
+                                                      'light'.trim(),
+                                                    'dark-ngx-dropzone':
+                                                      this.localStorageService.retrieve('theme').trim() !=
+                                                      'light'.trim()
+                                                  }" (change)="onContractFileSelect($event)" [multiple]="true"
+                                                    [maxFileSize]="8000000">
+                                                    <ngx-dropzone-label>
+                                                        <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                        <h3>Select file.</h3>
+                                                        <span class="text-muted font-13">Attach Contract document
+
+                                                        </span>
+                                                    </ngx-dropzone-label>
+                                                    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true"
+                                                        (removed)="onRemoveContractDocument(files)">
+                                                        <ngx-dropzone-label>{{
+                                                            files.at(0)!.name
+                                                            }}</ngx-dropzone-label>
+                                                    </ngx-dropzone-preview>
+                                                </ngx-dropzone>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 text-end">
+                                        <button class="btn btn-primary" (click)="nextStep()">Next</button>
+                                    </div>
+                                </div>
+                                <div *ngIf="currentStep === 2">
+                                    <div class="container text-center" style="max-width: 100%; margin: auto;">
+                                        <h3 class="bg-primary text-yellow p-2 rounded shadow">
+                                            Enter performance bond information of the contract
+                                        </h3>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="mb-3 col-sm-3">
+                                            <label for="industry" class="form-label">
+                                                <b>Amount </b>
+                                            </label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" id="pb_amount"
+                                                    formControlName="bond_amount" placeholder="performance bond amount"
+                                                    autocomplete="off" appCommaSeparate />
+                                            </div>
+                                            <!-- <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['bond_amount'].errors?.['required']">
+                                                Please Entere Contract Total Amount.
+                                            </div> -->
+                                        </div>
+                                        <div class="mb-3 col-sm-3">
+                                            <label for="location" class="form-label">
+                                                <b>Expiry date </b>
+                                            </label>
+                                            <div class="input-group">
+                                                <input type="text" placeholder="expiry date" class="form-control"
+                                                    autocomplete="off" id="floatingInput" bsDatepicker
+                                                    formControlName="bond_expiry_date"
+                                                    [bsConfig]="{adaptivePosition: true, dateInputFormat: 'DD/MM/YYYY' }" />
+                                            </div>
+                                            <!-- <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['bond_expiry_date'].errors?.['required']">
+                                                Please Entere Contract performance bond expiry date.
+                                            </div> -->
+                                        </div>
+
+                                        <div class="mb-3 col-sm-6">
+                                            <label for="IBAN" class="form-label">Issuer Bank</label>
+                                            <div class="input-group">
+                                                <select class="form-select" formControlName="issuer_bank"
+                                                    (change)="changeIssuerBank($event)">
+                                                    <option *ngFor="let bankName of IssuerBanks"
+                                                        [value]="bankName.name">
+                                                        {{ bankName.name }}
+
+                                                    </option>
+                                                    <!-- <option value="Project Contract">Project Contract</option>
+                                                <option value="SLA">Service Level Agreement</option>
+                                                <option value="AMC">Anual Maintainance Contract</option>
+                                                <option value="licence contract">Licence Contract</option> --> -->
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="mb-3 col-sm-6">
+
+                                            <label for="general_document" class="form-label">
+                                                <b>Document </b>
+                                            </label>
+
+                                            <div class="form-floating">
+                                                <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload"
+                                                    accept="application/pdf" [processDirectoryDrop]="false" [ngClass]="{
+                                                'light-ngx-dropzone':
+                                                  this.localStorageService.retrieve('theme').trim() ==
+                                                  'light'.trim(),
+                                                'dark-ngx-dropzone':
+                                                  this.localStorageService.retrieve('theme').trim() !=
+                                                  'light'.trim()
+                                              }" (change)="onSecurityFileSelect($event)" [multiple]="true"
+                                                    [maxFileSize]="8000000">
+                                                    <ngx-dropzone-label>
+                                                        <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                        <h3>Select file.</h3>
+                                                        <span class="text-muted font-13">Attach document
+
+                                                        </span>
+                                                    </ngx-dropzone-label>
+                                                    <ngx-dropzone-preview *ngFor="let f of securityDocument"
+                                                        [removable]="true"
+                                                        (removed)="onRemoveSecurityDocument(securityDocument)">
+                                                        <ngx-dropzone-label>{{
+                                                            securityDocument.at(0)!.name
+                                                            }}</ngx-dropzone-label>
+                                                    </ngx-dropzone-preview>
+                                                </ngx-dropzone>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="mb-3 col-sm-6">
+                                            <label for="SLA_description" class="form-label">Service Level
+                                                Description :</label>
+                                            <div class="form-group mt-10">
+                                                <quill-editor [placeholder]="'Service level agreement description'"
+                                                    formControlName="sla_description" style="width:100%"></quill-editor>
+                                            </div>
+                                        </div> -->
+                                    </div>
+
+                                    <div class="mb-3 d-flex justify-content-between">
+                                        <button class="btn btn-primary" (click)="prevStep()">Previous</button>
+                                        <button class="btn btn-primary" (click)="nextStep()">Next</button>
+                                    </div>
+                                </div>
+                                <!-- <div *ngIf="currentStep === 3">
+                                    <div class="container" style="max-width: 40%;">
+                                        <h3 class="text-center bg-primary text-white">Payment detail of the Contract
+                                        </h3>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="mb-3 col-sm-4">
+                                            <label for="Payment_status" class="form-label">Payment Status *</label>
+                                            <div class="input-group">
+                                                <select class="form-select" formControlName="payment_status">
+                                                    <option *ngFor="let type of PaymentStatus" [value]="type.name">
+                                                        {{ type.name }}
+
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['payment_status'].errors?.['required']">
+                                                Please Select Payment Status.
+                                            </div>
+                                        </div>
+                              
+                                        <div class="mb-3 col-sm-4">
+                                            <label for="payment_frequency" class="form-label">Payment frequency
+                                                *</label>
+                                            <div class="input-group">
+                                                <select class="form-select" formControlName="payment_frequency">
+                                                 
+                                                    <option value="monthly">Monthly</option>
+                                                    <option value="quarterly">Quarterly</option>
+                                                    <option value="semi_anualy">Semi-anualy</option>
+                                                    <option value="anualy">Anualy</option>
+                                                    <option value="phased">Phased</option>
+                                                </select>
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['payment_frequency'].errors?.['required']">
+                                                Please Select Payment Frequency.
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-sm-4">
+                                            <label for="late_penality_fee" class="form-label">Late Penality Fee</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" id="late_penality_fee"
+                                                    formControlName="late_penality_fee" placeholder="late penality fee"
+                                                    autocomplete="off" appCommaSeparate />
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 text-center">
+                                        <button class="btn btn-primary  mr-2" style="margin-right: 30%;"
+                                            (click)="prevStep()">Previous</button>
+                                        <button class="btn btn-primary" style="margin-left: 30%;"
+                                            (click)="nextStep()">Next</button>
+                                    </div>
+                                </div> -->
+                                <div *ngIf="currentStep === 3">
+                                    <div class="container text-center" style="max-width: 100%; margin: auto;">
+                                        <h3 class="bg-primary text-yellow p-2 rounded shadow">
+                                            Set payment milestones of the contract
+                                        </h3>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <!-- <div class="mb-3 col-sm-4"
+                                            *ngIf="registerForm.get('payment_status')?.value !== 'paid'&&registerForm.get('payment_frequency')?.value !== 'phased'">
+                                            <label for="payment_start_date" class="form-label">Payment start
+                                                date</label>
+                                            <div class="input-group">
+                                                <input type="text" placeholder="payment start date" class="form-control"
+                                                    autocomplete="off" id="floatingInput" bsDatepicker
+                                                    formControlName="payment_start_date"
+                                                    [bsConfig]="{adaptivePosition: true }" />
+                                            </div>
+                                        </div> -->
+
+                                        <div class="mb-3 col-sm-4">
+                                            <label for="payment_method" class="form-label">Payment Method *</label>
+                                            <div class="input-group">
+                                                <select class="form-select" formControlName="payment_method">
+                                                    <!-- <option value="aaaaaaa" selected>Please select menu</option> -->
+                                                    <option value="cash">Cash</option>
+                                                    <option value="check">Check</option>
+                                                    <option value="bank transfer">Bank Transfer</option>
+                                                </select>
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['payment_method'].errors?.['required']">
+                                                Please Select Payment Method.
+                                            </div>
+                                        </div>
+                                        <!-- 
+                                        <div class="mb-3 col-sm-4"
+                                            *ngIf="registerForm.get('payment_status')?.value !== 'paid'">
+                                            <label for="payment_end_date" class="form-label">Payment end date</label>
+                                            <div class="input-group">
+                                                <input type="text" placeholder="payment end date" class="form-control"
+                                                    autocomplete="off" id="floatingInput" bsDatepicker
+                                                    formControlName="payment_end_date"
+                                                    [bsConfig]="{adaptivePosition: true }" />
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="mb-3 col-sm-4"
+                                            *ngIf="registerForm.get('payment_status')?.value !== 'paid'">
+                                            <label for="payment_condition" class="form-label">Payment Condition
+                                                *</label>
+                                            <div class="input-group">
+                                                <select class="form-select" formControlName="payment_condition">
+                                                    <option value="deliverable">Deliverable</option>
+                                                    <option value="quality_standard">Quality standards</option>
+                                                    <option value="performance_indicator">performance indicators
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" submitted  && registerForm.controls['payment_condition'].errors?.['required']">
+                                                Please Select Payment Condition.
+                                            </div>
+                                        </div> -->
+                                    </div>
+
+
+                                    <!-- <h3 style="text-align: center;">Payment milestones:</h3> -->
+                                    <div formArrayName="payments">
+                                        <div *ngFor="let payment of payments.controls; let i = index; let last = last"
+                                            [formGroupName]="i">
+                                            <div class="row">
+                                                <div class="mb-3 col-sm-4">
+                                                    <label for="paymentTerm-{{ i }}" class="form-label">Payment
+                                                        Term:</label>
+                                                    <div class="input-group">
+                                                        <input id="paymentTerm-{{ i }}" type="text" class="form-control"
+                                                            formControlName="paymentTerm"
+                                                            placeholder="Enter payment term" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 col-sm-4">
+                                                    <label for="amount-{{ i }}" class="form-label">Amount:</label>
+                                                    <input id="amount-{{ i }}" type="number" class="form-control"
+                                                        formControlName="amount" placeholder="Enter amount" />
+                                                    <div class="invalid-feedback"
+                                                        *ngIf=" submitted  && registerForm.controls['payments'].errors?.['required']">
+                                                        Please fill amount.
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 col-sm-4">
+                                                    <label for="dueDate-{{ i }}" class="form-label">Due Date:</label>
+                                                    <input id="dueDate-{{ i }}" type="date" class="form-control"
+                                                        formControlName="dueDate" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="mb-3 col-sm-12">
+                                                    <label for="paymentDescription" class="form-label">Milestone
+                                                        Description</label>
+                                                    <div class="form-group mt-10">
+                                                        <quill-editor [placeholder]="'milestone description'"
+                                                            formControlName="paymentDescription"
+                                                            style="width:100%"></quill-editor>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 text-end" *ngIf="last && payments.length > 1">
+
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    (click)="removePayment(i)">Remove milestone</button>
+                                            </div>
+                                            <hr style="border:solid rgb(69, 9, 198);">
+                                        </div>
+
+                                    </div>
+                                    <button type="button" class="btn btn-success btn-sm" (click)="addPayment()">
+                                        More milestone</button>
+                                    <br><br>
+                                    <!-- <div class="row"> -->
+                                    <!-- <div class="mb-3 col-sm-6">
+                                                    <label for="general_document" class="form-label">Payment Confirmation
+                                                    </label>
+                                                    <div class="form-floating">
+                                                        <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload"
+                                                            accept="application/pdf" [processDirectoryDrop]="false" [ngClass]="{
+                                                        'light-ngx-dropzone':
+                                                          this.localStorageService.retrieve('theme').trim() ==
+                                                          'light'.trim(),
+                                                        'dark-ngx-dropzone':
+                                                          this.localStorageService.retrieve('theme').trim() !=
+                                                          'light'.trim()
+                                                      }" (change)="onPaymentConfirmationFileSelect($event)" [multiple]="true"
+                                                            [maxFileSize]="8000000">
+                                                            <ngx-dropzone-label>
+                                                                <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                                <h3>Select file.</h3>
+                                                                <span class="text-muted font-13">Attach payment confirmation
+        
+                                                                </span>
+                                                            </ngx-dropzone-label>
+                                                            <ngx-dropzone-preview *ngFor="let f of paymentConfirmation"
+                                                                [removable]="true"
+                                                                (removed)="onRemovePaymentConfirmationDocument(paymentConfirmation)">
+                                                                <ngx-dropzone-label>{{
+                                                                    paymentConfirmation.at(0)!.name
+                                                                    }}</ngx-dropzone-label>
+                                                            </ngx-dropzone-preview>
+                                                        </ngx-dropzone>
+                                                    </div>
+                                                </div> -->
+
+                                    <!-- </div> -->
+                                    <hr>
+                                    <div class="mb-3 d-flex justify-content-between">
+                                        <button class="btn btn-primary" (click)="prevStep()">Previous</button>
+                                        <button *ngIf="contract_id == null" class="btn btn-success" type="submit">
+                                            Submit </button>
+                                        <button
+                                            *ngIf="contract_id != null && role_name == 'Maker' && request_type==null"
+                                            class="btn btn-primary" type="submit">
+                                            Update </button>
+                                        <button
+                                            *ngIf="contract_id != null && role_name == 'Maker' && request_type=='Update request'"
+                                            class="btn btn-primary" type="submit">
+                                            Update </button>
+                                        <button
+                                            *ngIf="contract_id != null && role_name == 'Maker' && request_type=='Renew request'"
+                                            class="btn btn-primary" type="Renew">
+                                            Submit renew </button>
+
+                                        <button
+                                            *ngIf="contract_id != null && role_name == 'Maker' && request_type=='Addendum request'"
+                                            class="btn btn-primary" type="submit">
+                                            Submit Addendum </button>
+                                        <button *ngIf="contract_id != null && role_name == 'Checker'"
+                                            class="btn btn-danger">
+                                            Reject request </button>
+                                        <button *ngIf="contract_id != null && role_name == 'Checker'"
+                                            class="btn btn-success" type="submit">
+                                            Approve request </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<swal #SuccessSwalRegisterVendor title="Success" text="Request sent successfully!" icon="success"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SuccessSwalUpdateVendor title="Success" text="contract updated successfully!" icon="success"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+</swal>

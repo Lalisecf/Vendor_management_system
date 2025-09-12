@@ -1,0 +1,111 @@
+<div class="field-row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <app-navigator-upper></app-navigator-upper>
+            <h4 class="page-title">Add Issuer Bank </h4>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="continer mb-4">
+                        <div class="row mt-4">
+                            <form (ngSubmit)="submitBank()" [formGroup]="submitBankForm">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="continer mb-3 col-sm-12">
+
+                                            <div class="form-group">
+                                                <label for="floatingInput" class="form-label">Bank name</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                                    aria-describedby="emailHelp" name="name"
+                                                    placeholder="Enter name of bank." autocomplete="off"
+                                                    formControlName="name" />
+                                            </div>
+                                            <!-- <div class="invalid-feedback"
+                                                *ngIf="submitBankForm.controls['name'].touched && submitBankForm.controls['name'].errors?.['pattern']">
+                                                Please enter valid name.
+                                            </div> -->
+
+                                            <div class="valid-feedback"
+                                                *ngIf=" submitBankForm.controls['name'].touched && submitBankForm.controls['name'].valid">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf="submitted  && submitBankForm.controls['name'].errors?.['required']">
+                                                Please enter directorate.
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf="  submitBankForm.controls['name'].touched && submitBankForm.controls['name'].errors?.['minlength']">
+                                                At least 2 Characters.
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf="  submitBankForm.controls['name'].touched && submitBankForm.controls['name'].errors?.['maxlength']">
+                                                At most 500 Characters.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100"> </div>
+
+
+                                    <label for="floatingInput" class="form-label">Description of Bank:</label>
+                                    <div class="continer mb-4">
+                                        <div class="form-group mt-10">
+                                            <quill-editor [placeholder]="'Enter description of bank.'"
+                                                formControlName="description" style="width:100%"></quill-editor>
+
+                                        </div>
+
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && submitBankForm.controls['description'].errors?.['required']">
+                                            Please enter description of bank.
+                                        </div>
+                                        <div class="valid-feedback"
+                                            *ngIf=" submitBankForm.controls['description'].touched && submitBankForm.controls['description'].valid">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="  submitBankForm.controls['description'].touched && submitBankForm.controls['description'].errors?.['minlength']">
+                                            At least 5 Characters.
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="  submitBankForm.controls['description'].touched && submitBankForm.controls['description'].errors?.['maxlength']">
+                                            At most 1000 Characters.
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12  text-center">
+                                    <button *ngIf="bank_id == null" class="btn btn-primary" type="submit">
+                                        Register
+                                    </button>
+                                    <button *ngIf="bank_id != null" class="btn btn-primary" type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <swal
+      #SuccessSwalRegisterUser
+      title="Success"
+      text="User registered successfully!"
+      icon="success"
+      [showCancelButton]="false"
+      [showConfirmButton]="false"
+      [timer]="2500"
+      [focusCancel]="true"
+    ></swal> -->
+
+    <swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+        [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+    </swal>
+
+
+    <!-- </div> -->
+    <!-- </div> -->

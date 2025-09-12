@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <app-navigator-upper></app-navigator-upper>
+            <h4 class="page-title">Issuer Bank</h4>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">Issuer Bank</h4>
+                    <div class="continer mb-4">
+                        <div class="row">
+                            <div class="row d-flex justify-content-end">
+                                <button enabled class="btn btn-primary" style="width: fit-content"
+                                    (click)="goToPage('maker/add-issuer-bank')">
+                                    Add Issuer Bank
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+
+                            <table datatable [dtOptions]="dtOptions" id="users_table"
+                                class="table table-bordered dt-responsive nowrap w-100">
+                                <tfoot>
+                                    <tr style="border-top: none !important">
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" [ngModel]="input_0"
+                                                    id="{{ first_column_id }}" name="search-id"
+                                                    class="form-control {{ first_column_id }} _id" />
+                                                <label for="floatingInput">Id</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ second_column_id }}"
+                                                    name="search-first-name" [ngModel]="input_1"
+                                                    class="form-control {{ second_column_id }} _firstname" />
+
+                                                <label for="floatingInput">Bank Name</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ third_column_id }}"
+                                                    name="search-last-name" [ngModel]="input_2"
+                                                    class="form-control {{ third_column_id }} _middlename" />
+
+                                                <label for="floatingInput">Description </label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ fourth_column_id }}"
+                                                    name="search-last-name" [ngModel]="input_3"
+                                                    class="form-control {{ fourth_column_id }} _lastname" />
+
+                                                <label for="floatingInput">Created Date </label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ fifth_column_id }}"
+                                                    name="search-last-name" [ngModel]="input_4"
+                                                    class="form-control {{ fifth_column_id }} _gender" />
+
+                                                <label for="floatingInput">Created By</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ sixth_column_id }}"
+                                                    name="search-last-name" [ngModel]="input_5"
+                                                    class="form-control {{ sixth_column_id }} _role" />
+
+                                                <label for="floatingInput">Status</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ seventh_column_id }}"
+                                                    name="search-last-name" [ngModel]="input_6"
+                                                    class="form-control {{ seventh_column_id }} _role" />
+
+                                                <label for="floatingInput">Change Status</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ eight_column_id }}"
+                                                    name="search-last-name" [ngModel]="input_7"
+                                                    class="form-control {{ eight_column_id }} _role" />
+
+                                                <label for="floatingInput">Action</label>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+</swal>

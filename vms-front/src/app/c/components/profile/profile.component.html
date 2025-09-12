@@ -1,0 +1,205 @@
+<div class="row mt-3">
+    <h4 style="text-align:center ;font-family: Georgia, 'Times New Roman', Times, serif;">Welcome! You are <b
+            style="color: blue;">online</b></h4>
+    <div class="col mt-3">
+        <h3
+            style="font-family: Georgia, 'Times New Roman', Times, serif; font-style: oblique;flex-wrap: inherit;font: medium;">
+            <i class="mdi mdi-check"></i> Your Profile picture
+
+        </h3>
+
+        <p *ngIf="showImage">
+            Height
+            <input class="col-md-3" type="number" min="300" (change)="height($event)" />
+            <br><br>
+            Width
+            <input type="number" class="col-md-3" min="290" (change)="width($event)" />
+        </p>
+        <div class="col-md-6">
+            <img *ngIf="showImage" [src]="url" [height]="heights" [width]="widths" alt="Image not found" />
+            <div *ngIf="showImage">
+                <button style="margin-top: 10px; align-self:center ;" class="btn btn-success" (click)="onsubmit()">
+                    Change
+                </button>
+            </div>
+            <!-- <img class="rounded-pill" *ngIf="!showImage && !DefualtPhoto" [src]=" url" alt="Image not found" [height]="heights"
+                [width]="widths" (click)="zoomout()"> -->
+            <div class=" container">
+                <img class="rounded-pill" *ngIf="!showImage && !DefualtPhoto" [src]=" url" alt="Avatar"
+                    [height]="heights" [width]="widths" (click)="zoomout()">
+                <div class="middle">
+                    <div class="text"><i class="mdi mdi-check text-primary"> {{user.firstname}} {{user.middlename}}
+                            Photo </i> </div>
+                </div>
+            </div>
+            <img class="rounded-pill" *ngIf="DefualtPhoto" src="/vms/assets/template_assets/images/users/default_user.jfif"
+                alt="Image not found" [height]="heights" [width]="widths" (click)="zoomout()">
+            <!-- <ngx-image-zoom [thumbImage]=myThumbnail [fullImage]=myFullresImage [magnification]="1"
+                [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200"></ngx-image-zoom> -->
+            <div clas="row" style="color: rgb(96, 96, 94); margin-bottom: auto;"><b style="color: green;"> <i
+                        class="mdi mdi-note icon"></i> If you want to change your profile picture
+                    Use below options !
+                </b>
+                <div class="col-md-12" *ngIf="uploaded || oninit">
+                    <button class="btn btn-primary" *ngIf="uploaded || oninit" (click)="capture()">
+                        <i class="mdi mdi-camera icon"></i>Capture your photo
+                    </button>
+                </div>
+                <!-- <div class="col-md-2"  *ngIf="!uploaded && oninit && !captured"> or</div> -->
+                <div class="col-md-12" *ngIf="captured || oninit">
+                    <button class="btn btn-secondary" (click)="uploade()">
+                        <i class="mdi mdi-file icon"></i>Upload your photo
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="captured">
+                <webcam [trigger]="invokeObservable" (imageCapture)="captureImg($event)"></webcam>
+                <button class="btn btn-danger" (click)="getSnapshot()">
+                    Capture photo
+                </button>
+
+            </div>
+            <div class="col-md-6" *ngIf="uploaded">
+                <input type="file" (change)="onFolderSelected($event)" />
+            </div>
+        </div>
+    </div>
+    <div class="col mt-3">
+        <h3>
+            <i class="mdi mdi-check icon"></i> Your Detail Informations
+        </h3>
+
+        <!--  -->
+        <!-- <details> -->
+        <form [formGroup]="submitUserDetailtForm" (ngSubmit)="UpdateUserDetail()">
+            <div class="mb-2">
+                <label for="First name" class="form-label">First name</label>(
+                <i class="mdi mdi-account icon"></i>)
+                <div class="input-group input-group-merge">
+                    <input type="text" id="password" class="form-control" formControlName="firstname"
+                        placeholder="Your name" name="firstname" [(ngModel)]="user.firstname" />
+                </div>
+                <div class="valid-feedback" *ngIf="
+                          submitted && submitUserDetailtForm.controls['firstname'].valid
+                        ">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitUserDetailtForm.controls['firstname'].touched && submitUserDetailtForm.controls['firstname'].errors?.['pattern']">
+                    Please enter valid name.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['firstname'].errors?.['required']">
+                    Please enter firstname.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['firstname'].errors?.['minlength']">
+                    At least 4 Characters.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['firstname'].errors?.['maxlength']">
+                    At most 50 Characters.
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label for="First name" class="form-label">Middle name</label>(
+                <i class="mdi mdi-account icon"></i>)
+                <div class="input-group input-group-merge">
+                    <input type="text" id="password" class="form-control" formControlName="middlename"
+                        [(ngModel)]="user.middlename" placeholder="Your father name" />
+                </div>
+                <div class="valid-feedback" *ngIf="
+                submitted && submitUserDetailtForm.controls['middlename'].valid
+              ">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitUserDetailtForm.controls['middlename'].touched && submitUserDetailtForm.controls['middlename'].errors?.['pattern']">
+                    Please enter valid name.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['middlename'].errors?.['required']">
+                    Please enter middlename.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['middlename'].errors?.['minlength']">
+                    At least 4 Characters.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['middlename'].errors?.['maxlength']">
+                    At most 50 Characters.
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="First name" class="form-label">Last name</label>(
+                <i class="mdi mdi-account icon"></i>)
+                <div class="input-group input-group-merge">
+                    <input type="text" id="password" class="form-control" formControlName="lastname"
+                        [(ngModel)]="user.lastname" placeholder="Your grand father name" />
+                </div>
+                <div class="valid-feedback" *ngIf="
+                submitted && submitUserDetailtForm.controls['lastname'].valid
+              ">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitUserDetailtForm.controls['lastname'].touched && submitUserDetailtForm.controls['lastname'].errors?.['pattern']">
+                    Please enter valid name.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['lastname'].errors?.['required']">
+                    Please enter lastname.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['lastname'].errors?.['minlength']">
+                    At least 4 Characters.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['lastname'].errors?.['maxlength']">
+                    At most 50 Characters.
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="First name" class="form-label">Email name</label>(
+                <i class="mdi mdi-email icon"></i>)
+                <div class="input-group input-group-merge">
+                    <input type="text" id="password" class="form-control" formControlName="email"
+                        [(ngModel)]="user.email" placeholder=" your Outlook email" readonly />
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="First name" class="form-label">Phone number</label>(
+                <i class="mdi mdi-phone icon"></i>)
+                <div class="input-group input-group-merge">
+                    <input type="text" id="password" class="form-control" formControlName="phonenumber"
+                        [(ngModel)]="user.phonenumber" placeholder=" your mobile number" />
+                </div>
+                <div class="valid-feedback" *ngIf="
+                submitted &&
+                submitUserDetailtForm.controls['phonenumber'].valid
+              ">
+                    Looks good!
+                </div>
+                <!-- <div class="invalid-feedback" *ngIf="submitUserDetailtForm.controls['phonenumber'].touched && submitUserDetailtForm.controls['phonenumber'].errors?.['pattern']">Please enter valid Phone number.
+            </div> -->
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['phonenumber'].errors?.['required']">
+                    Please enter phonenumber.
+                </div>
+                <div class="invalid-feedback"
+                    *ngIf="submitted && submitUserDetailtForm.controls['phonenumber'].errors?.['invalid_phone_number']">
+                    Invalid phone number
+                </div>
+
+            </div>
+            <div class="mb-1 text-center">
+                <button class="btn btn-primary" type="submit"> <i class="mdi mdi-pen icon"></i>Editing</button>
+            </div>
+            <!-- </details> -->
+            <!--  -->
+        </form>
+
+    </div>
+
+</div>

@@ -1,0 +1,132 @@
+.custom-swal-popup {
+  border-radius: 10px;
+  /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  /* Soft shadow */
+}
+
+.input-group {
+  margin-bottom: 15px;
+  /* Space between input fields */
+}
+
+.swal2-input {
+  width: calc(100% - 20px);
+  /* Full width minus padding */
+  padding: 10px;
+  /* Padding for input */
+  border: 1px solid #ccc;
+  /* Border style */
+  border-radius: 5px;
+  /* Rounded input */
+}
+
+.file-list {
+  list-style: none;
+  /* Remove bullet points */
+  padding: 0;
+  /* Remove padding */
+}
+
+.file-list li {
+  display: flex;
+  /* Flexbox for alignment */
+  justify-content: space-between;
+  /* Space between elements */
+  align-items: center;
+  /* Center items vertically */
+  padding: 5px 0;
+  /* Vertical padding */
+}
+
+.file-list button {
+  background: none;
+  /* No background */
+  border: none;
+  /* No border */
+  cursor: pointer;
+  /* Pointer cursor */
+}
+
+.modal-content {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.text-primary {
+  color: #007bff;
+}
+
+.highlight {
+  background-color: #e9f7fe;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.swal2-input {
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  padding: 10px;
+  width: calc(100% - 22px);
+  margin-bottom: 10px;
+}
+
+.file-upload {
+  margin-top: 20px;
+}
+
+.attach-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.attach-btn:hover {
+  background-color: #0056b3;
+}
+
+.description {
+  font-size: 14px;
+  color: #555;
+}
+
+.two-column {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.column {
+  flex: 1;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  /* Align items vertically */
+  margin-bottom: 15px;
+  /* Space between input groups */
+}
+
+.input-group label {
+  flex: 0 0 150px;
+  /* Fixed width for labels */
+  margin-right: 10px;
+  /* Space between label and input */
+}
+
+.input-group input {
+  flex: 1;
+  /* Input takes remaining space */
+}
+
+.text-danger {
+  color: red;
+}

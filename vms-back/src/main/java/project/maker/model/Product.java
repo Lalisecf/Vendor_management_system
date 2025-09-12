@@ -1,0 +1,70 @@
+package project.maker.model;
+
+public class Product {
+	private Long id;
+	private String name;
+	private String description;
+	private String created_date;
+	private String created_by;
+	private String status;
+	private String availability;
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Product(Long id, String name, String description, String created_date, String created_by, String status,
+			String availability) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.created_date = created_date;
+		this.created_by = created_by;
+		this.status = status;
+		this.availability = availability;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getCreated_date() {
+		return created_date;
+	}
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
+	}
+	public String getCreated_by() {
+		return created_by;
+	}
+	public void setCreated_by(String created_by) {
+		this.created_by = created_by;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getAvailability() {
+		return availability;
+	}
+	public void setAvailability(String availability) {
+		this.availability = availability;
+	}
+	
+
+}

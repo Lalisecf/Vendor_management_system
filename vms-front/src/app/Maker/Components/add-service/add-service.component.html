@@ -1,0 +1,111 @@
+<div class="field-row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <app-navigator-upper></app-navigator-upper>
+            <h4 class="page-title">Add product Category </h4>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="continer mb-4">
+                        <div class="row mt-4">
+                            <form (ngSubmit)="submitService()" [formGroup]="submitServiceForm">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="continer mb-3 col-sm-12">
+
+                                            <div class="form-group">
+                                                <label for="floatingInput" class="form-label">Category name:</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                                    aria-describedby="emailHelp" name="name"
+                                                    placeholder="Enter name of category." autocomplete="off"
+                                                    formControlName="name" />
+                                            </div>
+                                            <!-- <div class="invalid-feedback"
+                                                *ngIf="submitServiceForm.controls['name'].touched && submitServiceForm.controls['name'].errors?.['pattern']">
+                                                Please enter valid name.
+                                            </div> -->
+
+                                            <div class="valid-feedback"
+                                                *ngIf=" submitServiceForm.controls['name'].touched && submitServiceForm.controls['name'].valid">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf="submitted  && submitServiceForm.controls['name'].errors?.['required']">
+                                                Please enter name.
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf="  submitServiceForm.controls['name'].touched && submitServiceForm.controls['name'].errors?.['minlength']">
+                                                At least 2 Characters.
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf="  submitServiceForm.controls['name'].touched && submitServiceForm.controls['name'].errors?.['maxlength']">
+                                                At most 500 Characters.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100"> </div>
+
+
+                                    <label for="floatingInput" class="form-label">Description of category:</label>
+                                    <div class="continer mb-4">
+                                        <div class="form-group mt-10">
+                                            <quill-editor [placeholder]="'Enter description of category.'"
+                                                formControlName="description" style="width:100%"></quill-editor>
+
+                                        </div>
+
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && submitServiceForm.controls['description'].errors?.['required']">
+                                            Please enter description of category.
+                                        </div>
+                                        <div class="valid-feedback"
+                                            *ngIf=" submitServiceForm.controls['description'].touched && submitServiceForm.controls['description'].valid">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="  submitServiceForm.controls['description'].touched && submitServiceForm.controls['description'].errors?.['minlength']">
+                                            At least 5 Characters.
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="  submitServiceForm.controls['description'].touched && submitServiceForm.controls['description'].errors?.['maxlength']">
+                                            At most 1000 Characters.
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12  text-center">
+                                    <button *ngIf="service_id == null" class="btn btn-primary" type="submit">
+                                        Register
+                                    </button>
+                                    <button *ngIf="service_id != null" class="btn btn-primary" type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <swal
+      #SuccessSwalRegisterUser
+      title="Success"
+      text="User registered successfully!"
+      icon="success"
+      [showCancelButton]="false"
+      [showConfirmButton]="false"
+      [timer]="2500"
+      [focusCancel]="true"
+    ></swal> -->
+
+    <swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+        [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+    </swal>
+
+
+    <!-- </div> -->
+    <!-- </div> -->

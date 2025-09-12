@@ -1,0 +1,424 @@
+<div class="con leftside-menu collapsible" style="position: sticky; height: 100%">
+  <div class="leftside-menu leftside-menu-detached" style="height: 100%;">
+    <!-- overflow-x: visible; overflow-y: auto -->
+    <div class="leftbar-user">
+      <a href="javascript: void(0);" *ngIf="
+          this.localStorageService.retrieve('theme').trim() == 'dark'.trim()
+        ">
+
+        <!-- <img src="/rms/assets/template_assets/images/aa_assets/aa_logo_003.svg" alt="aa bank logo" height="45"
+          class="shadow-sm mt-2" style="background: #f1f1f1d9; padding: 2px" /> -->
+        <span class="leftbar-user-name" style="margin-left: 0px">Vendor Management System</span>
+      </a>
+      <a href="javascript: void(0);" *ngIf="
+          this.localStorageService.retrieve('theme').trim() == 'light'.trim()
+        ">
+        <!-- <img src="/rms/assets/template_assets/images/aa_assets/aa_logo_003.svg" alt="aa bank logo" height="45"
+          class="shadow-sm mt-2" /> -->
+        <span class="leftbar-user-name" style="margin-left: 0px">Vendor Management System</span>
+      </a>
+    </div>
+    <ul class="side-nav">
+
+      <!--- Sidemenu -->
+
+      <!-- Approver menus start======================================================================== -->
+      <li class="side-nav-title side-nav-item" *ngIf="authService.isApprover()">Approver</li>
+      <li class="side-nav-title side-nav-item" *ngIf="authService.isMaker()">Maker</li>
+      <li class="side-nav-title side-nav-item" *ngIf="authService.isAdmin()">Admin</li>
+      <li class="side-nav-title side-nav-item" *ngIf="authService.isChecker()">Checker</li>
+      <li class="side-nav-title side-nav-item" *ngIf="authService.isManager()">Manager</li>
+      <li class="side-nav-title side-nav-item" *ngIf="authService.isDirector()">Director</li>
+      <li class="side-nav-title side-nav-item" *ngIf="authService.isChief()">Senior IT Chief</li>
+      <li class="side-nav-item">
+        <a href="javascript: void(0);" (click)="goToPage('home')" class="side-nav-link">
+          <span class="icon-circle">
+            <i class="mdi mdi-view-dashboard"></i>
+          </span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="side-nav-item">
+        <a href="javascript: void(0);" (click)="goToPage('profile')" class="side-nav-link">
+          <span class="icon-circle">
+            <i class="mdi mdi-account"></i>
+          </span>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isApprover()">
+        <a href="javascript: void(0);" (click)="goToPage('Approver/pending-users')" class="side-nav-link">
+          <i class="mdi mdi-account-details"></i>
+          <span>Users </span>
+        </a>
+      </li>
+
+
+
+
+      <!-- <li class="side-nav-item" *ngIf="authService.isApprover()">
+        <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards"
+          class="side-nav-link">
+          <i class="uil-question-circle"></i>
+          <span class="side-items"> Pool Requests </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarDashboards">
+          <ul class="side-nav-second-level">
+            <li *ngIf="authService.isApprover()">
+              <a href="javascript: void(0);" (click)="goToPage('Approver/Pending-Pool')">
+                <span>Pending Requests</span>
+              </a>
+            </li>
+
+            <li *ngIf="authService.isApprover()">
+              <a href="javascript: void(0);" (click)="goToPage('Approver/Approved-Pool')">
+                <span>Approved Requests</span>
+              </a>
+            </li>
+
+            <li *ngIf="authService.isApprover()">
+              <a href="javascript: void(0);" (click)="goToPage('Approver/Rejected-Pool')">
+                <span>Rejected Requests</span>
+
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </li> -->
+      <!-- <li class="side-nav-item" *ngIf="authService.isApprover()">
+        <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce"
+          class="side-nav-link">
+          <i class="uil-question-circle"></i>
+          <span class="side-items"> Account Requests </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarEcommerce">
+          <ul class="side-nav-second-level">
+            <li *ngIf="authService.isApprover()">
+              <a href="javascript: void(0);" (click)="goToPage('Approver/Account-requests')">
+                <span>Pending Requests</span>
+              </a>
+            </li>
+
+            <li *ngIf="authService.isApprover()">
+              <a href="javascript: void(0);" (click)="goToPage('Approver/Approved-account-requests')">
+            
+                <span>Approved Requests</span>
+              </a>
+            </li>
+
+            <li *ngIf="authService.isApprover()">
+              <a href="javascript: void(0);" (click)="goToPage('Approver/Rejected-account-requests')">
+           
+                <span>Rejected Requests</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </li> -->
+      <!-- <li class="side-nav-item" *ngIf="authService.isApprover()">
+        <a data-bs-toggle="collapse" href="#sidebarEcommerc" aria-expanded="false" aria-controls="sidebarEcommerc"
+          class="side-nav-link">
+          <i class="uil-comment"></i>
+          <span class="side-items"> Remarks </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarEcommerc">
+          <ul class="side-nav-second-level">
+            <li *ngIf="authService.isApprover()">
+              <a href="javascript: void(0);" (click)="goToPage('Approver/currency-remark')">
+                <span class="badge bg-success float-end"></span>
+                <span>Currency Remark</span>
+              </a>
+            </li>
+            <li *ngIf="authService.isApprover()">
+              <a href="javascript: void(0);" (click)="goToPage('Approver/account-remark')">
+                <span class="badge bg-success float-end"></span>
+                <span>Account Remark</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </li> -->
+
+
+
+
+      <!-- Approver menus end======================================================================== -->
+      <li class="side-nav-item" *ngIf="authService.isChecker()">
+        <a href="javascript: void(0);" (click)="goToPage('checker/view-vendors')" class="side-nav-link">
+          <i class="mdi mdi-alpha-v"></i>
+          <span>Vendors</span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isChecker()">
+        <a href="javascript: void(0);" (click)="goToPage('checker/view-contracts')" class="side-nav-link">
+          <i class="mdi mdi-alpha-c"></i>
+          <span>Contracts</span>
+        </a>
+      </li>
+
+      <!-- Admin menus start======================================================================== -->
+      <li class="side-nav-item" *ngIf="authService.isMaker()">
+        <a href="javascript: void(0);" (click)="goToPage('maker/view-vendors')" class="side-nav-link">
+          <i class="mdi mdi-alpha-v"></i>
+          <span>Vendors</span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isMaker()">
+
+        <a href="javascript: void(0);" (click)="goToPage('maker/view-contracts')" class="side-nav-link">
+
+          <i class="mdi mdi-alpha-c"></i>
+          <span>Contracts</span>
+        </a>
+      </li>
+
+      <li class="side-nav-item" *ngIf="authService.isMaker() || authService.isChecker()">
+        <a href="javascript: void(0);" (click)="goToPage('view-licence')" class="side-nav-link">
+          <i class="mdi mdi-alpha-l"></i>
+          <span>Licence</span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isMaker() ||authService.isChecker()">
+
+        <a href="javascript: void(0);" (click)="goToPage('Home/:Payment-Processes')" class="side-nav-link">
+
+          <i class="mdi mdi-alpha-p"></i>
+          <span>Payment Processes</span>
+        </a>
+      </li>
+
+      <li class="side-nav-item" *ngIf="authService.isManager()">
+
+        <a href="javascript: void(0);" (click)="goToPage('Manager/View-payment')" class="side-nav-link">
+
+          <i class="mdi mdi-alpha-p"></i>
+          <span>Payments</span>
+        </a>
+      </li>
+
+      <li class="side-nav-item" *ngIf="authService.isDirector()">
+
+        <a href="javascript: void(0);" (click)="goToPage('Director/View-payment')" class="side-nav-link">
+
+          <i class="mdi mdi-alpha-s"></i>
+          <span>Show Payments</span>
+        </a>
+      </li>
+
+      <li class="side-nav-item" *ngIf="authService.isFinance()">
+
+        <a href="javascript: void(0);" (click)="goToPage('Finance/View-payment')" class="side-nav-link">
+
+          <i class="mdi mdi-alpha-s"></i>
+          <span>Show Payment</span>
+        </a>
+      </li>
+
+      <li class="side-nav-item" *ngIf="authService.isManager()">
+        <a href="javascript: void(0);" (click)="goToPage('Manager/View-Requested-payment')" class="side-nav-link">
+          <i class="mdi mdi-alpha-r"></i>
+          <span>
+            Requested Payments
+            <span *ngIf="pendingCount > 0" class="badge">{{ pendingCount }}</span>
+          </span>
+        </a>
+      </li>
+      
+      
+      <li class="side-nav-item" *ngIf="authService.isManager()">
+
+        <a href="javascript: void(0);" (click)="goToPage('Manager/View-Requested-Addendum-payment')"
+          class="side-nav-link">
+
+          <i class="mdi mdi-alpha-a"></i>
+          <span> Addendum Requested
+            <span *ngIf="AddedumpendingCount > 0" class="badge">{{ AddedumpendingCount }}</span>
+          </span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isDirector()">
+
+        <a href="javascript: void(0);" (click)="goToPage('Director/View-Requested-payment')" class="side-nav-link">
+
+          <i class="mdi mdi-alpha-v"></i>
+          <span>Requested Payments
+            <span *ngIf="pendingCount > 0" class="badge">{{ pendingCount }}</span>
+          </span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isDirector()">
+
+        <a href="javascript: void(0);" (click)="goToPage('Director/View-Requested-Addendum-payment')"
+          class="side-nav-link">
+          <i class="mdi mdi-alpha-a"></i>
+          <span> Addendum Requested
+            <span *ngIf="AddedumpendingCount > 0" class="badge">{{ AddedumpendingCount }}</span>
+          </span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isFinance()">
+
+        <a href="javascript: void(0);" (click)="goToPage('Finance/View-Requested-payment')" class="side-nav-link">
+          <i class="mdi mdi-alpha-v"></i>
+          <span>Requested 
+            <span *ngIf="pendingCount > 0" class="badge">{{ pendingCount }}</span>
+          </span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isFinance()">
+
+        <a href="javascript: void(0);" (click)="goToPage('Finance/View-Requested-Addendum-payment')"
+          class="side-nav-link">
+
+          <i class="mdi mdi-alpha-a"></i>
+          <span> Addendum Requested
+            <span *ngIf="AddedumpendingCount > 0" class="badge">{{ AddedumpendingCount }}</span>
+          </span>
+        </a>
+      </li>
+
+      <li class="side-nav-item" *ngIf="authService.isChief()">
+        <a href="javascript: void(0);" (click)="goToPage('Chief/View-payment')" class="side-nav-link">
+          <span class="icon-circle">
+            <i class="mdi mdi-credit-card-check text-primary"></i>
+          </span>
+          <span>Payments</span>
+        </a>
+      </li>
+
+      <li class="side-nav-item" *ngIf="authService.isChief()">
+        <a href="javascript: void(0);" (click)="goToPage('Chief/View-Requested-payment')" class="side-nav-link">
+          <span class="icon-circle">
+            <i class="mdi mdi-help-circle text-warning"></i>
+          </span>
+          <span>Requested Payments
+            <span *ngIf="pendingCount > 0" class="badge">{{ pendingCount }}</span>
+          </span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isChief()">
+        <a href="javascript: void(0);" (click)="goToPage('Chief/View-Requested-Addendum-payment')"
+          class="side-nav-link">
+          <span class="icon-circle">
+            <i class="mdi mdi-help-circle text-warning"></i>
+          </span>
+          <span>Requested Addendum Payments
+            <span *ngIf="AddedumpendingCount > 0" class="badge">{{ AddedumpendingCount }}</span>
+          </span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="!authService.isAdmin()">
+        <a href="javascript: void(0);" (click)="goToPage('Payment-History')" class="side-nav-link">
+          <span class="icon-circle">
+            <i class="mdi mdi-clock-outline text-warning"></i>
+          </span>
+          <span>Payment History</span>
+        </a>
+      </li>
+      <li class="side-nav-item">
+        <a href="javascript: void(0);" (click)="goToPage('')" class="side-nav-link">
+          <i class="mdi mdi-alpha-c"></i>
+          <span>Issues and Resolutions</span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isMaker() ||authService.isChecker()">
+        <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce"
+          class="side-nav-link">
+          <i class="mdi mdi-alpha-r"></i>
+          <span class="side-items"> Reports </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarEcommerce">
+          <ul class="side-nav-second-level">
+            <!-- <li>
+              <a href="javascript: void(0);" (click)="goToPage('Report/payment-report')">
+                <span>Payment Report</span>
+              </a>
+            </li> -->
+
+            <li>
+              <a href="javascript: void(0);">
+                <!-- <span class="badge bg-success float-end">2</span> -->
+                <span (click)="onChange('General')">General Report</span>
+
+              </a>
+            </li>
+
+            <li>
+              <a href="javascript: void(0);">
+                <!-- <span class="badge bg-success float-end">2</span> -->
+                <span (click)="onChange('Spesfic')">Spesfic Report</span>
+              </a>
+            </li>
+
+            <!-- <li *ngIf="authService.isMaker()">
+              <a href="javascript: void(0);" (click)="goToPage('Approver/Rejected-account-requests')">
+                <span>Other Report 3</span>
+              </a>
+            </li> -->
+
+          </ul>
+        </div>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isAdmin()">
+        <a href="javascript: void(0);" (click)="goToPage('admin/users')" class="side-nav-link">
+          <i class="mdi mdi-account-details"></i>
+          <span> Users </span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isAdmin()">
+        <a href="javascript: void(0);" (click)="goToPage('admin/roles')" class="side-nav-link">
+
+          <i class="mdi mdi-account-key-outline"></i>
+          <span> Roles </span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isAdmin()">
+        <a href="javascript: void(0);" (click)="goToPage('admin/functionalities')" class="side-nav-link">
+          <i class="mdi mdi-lock-check-outline"></i>
+          <span> Functionalities </span>
+        </a>
+      </li>
+      <li class="side-nav-title side-nav-item" *ngIf="authService.isAdmin()">System</li>
+      <li class="side-nav-item" *ngIf="authService.isAdmin()">
+        <a href="javascript: void(0);" (click)="goToPage('admin/logins')" class="side-nav-link">
+          <i class="mdi mdi-login"></i>
+          <span> Logins </span>
+        </a>
+      </li>
+      <li class="side-nav-item" *ngIf="authService.isAdmin()">
+        <a href="javascript: void(0);" (click)="goToPage('admin/user-activities')" class="side-nav-link">
+          <i class="mdi mdi-clipboard-list-outline"></i>
+          <span> User Activities </span>
+        </a>
+      </li>
+      <!-- <li class="side-nav-item" *ngIf="authService.isAdmin()">
+        <a href="javascript: void(0);" (click)="goToPage('admin/mm')" class="side-nav-link">
+          <i class="mdi mdi-clipboard-list-outline"></i>
+          <span> mm</span>
+        </a>
+      </li> -->
+      <!-- ====================================================================================================== -->
+      <!-- here is reconciliation endale -->
+
+      <!-- 
+      <li class="side-nav-item" *ngIf="authService.isMaker()">
+        <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
+            <i class="mdi mdi-format-list-checks"></i>
+            <b><span> Workspace</span></b>
+            <span class="menu-arrow"></span>
+        </a> -->
+
+
+      <!-- </li> -->
+      <!-- ====================================================================================================== -->
+
+    </ul>
+  </div>
+</div>

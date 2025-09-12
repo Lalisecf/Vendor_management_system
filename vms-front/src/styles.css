@@ -1,0 +1,102 @@
+@import '~quill/dist/quill.snow.css';
+
+
+table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
+  text-align: center;
+  padding: 0.95rem 0.95rem;
+}
+
+.toast-right-top.error {
+  height: fit-content !important;
+}
+.light-ngx-dropzone {
+  border: 2px dashed #dee2e6 !important;
+  background: #fff !important;
+}
+.dark-ngx-dropzone {
+  background: #37404a !important;
+  border: 2px dashed #565d64 !important;
+}
+.dataTables_scrollBody table thead tr {
+  border-top: 0px;
+}
+table.table-bordered.dataTable th:first-child, table.table-bordered.dataTable th:first-child, table.table-bordered.dataTable td:first-child, table.table-bordered.dataTable td:first-child{
+border-left: 0px;
+}
+/* ============================================================= */
+body[data-layout='detached'] .container-fluid,
+body[data-layout='detached'] .container-lg,
+body[data-layout='detached'] .container-md,
+body[data-layout='detached'] .container-sm,
+body[data-layout='detached'] .container-xl,
+body[data-layout='detached'] .container-xxl{
+  max-width: 100% !important;
+      margin-left: 0px !important;
+        margin-right: 0px !important;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.leftside-menu::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.leftside-menu {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+/* ========================================================== */
+/* #app-left-side-menu{
+  display: flex !important;
+  height: 100vh;
+} */
+/* table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected{
+  color: red !important;
+  background-color: red !important;
+} */
+
+/* .dtfh-floatingparent.dtfh-floatingparenthead{
+  margin-top: 70px !important;
+} */
+/* Custom scrollbar for the country list dropdown */
+.iti__country-list {
+  max-height: 200px; /* Set a maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  scrollbar-width: thick; /* For Firefox */
+  scrollbar-color: #888 #f0f0f0; /* For Firefox */
+  z-index: 3;
+  }
+  
+  /* For Webkit browsers like Chrome and Safari */
+  .iti__country-list::-webkit-scrollbar {
+  width: 8px;
+  }
+/*   
+  .iti__country-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  } */
+  
+  .iti__country-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+  }
+
+  /* .iti__selected-flag {
+padding-left: 10px; 
+} */
+
+
+/* .iti {
+  position: relative;
+} */
+
+/* Ensure the input field is displayed below the flag */
+.iti__selected-flag {
+  position: absolute;
+  right: 0;
+}
+
+.iti__flag-container {
+  z-index: 2; /* Lower than the input field */
+  }
+/* Adjust the padding to create space between the flag and input field */

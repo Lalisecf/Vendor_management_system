@@ -1,0 +1,22 @@
+.modal-xl {
+    max-width: 96%;
+}
+
+
+#vendors_table.table-bordered {
+    border: 0.1px solid #050505;
+    /* Adjust thickness and color */
+}
+
+#vendors_table .dataTables_filter input:focus {
+    border-color: blue;
+    background-color: #f0f8ff;
+    /* Light blue background */
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+    outline: none;
+}
+
+/* table.dataTable tbody td.dt-body-wrap {
+      white-space: normal;
+      word-wrap: break-word;
+    } */

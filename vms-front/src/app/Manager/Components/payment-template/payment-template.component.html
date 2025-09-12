@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Request Form</title>
+    <style>
+        /* Print-specific styles */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 1cm;
+            }
+
+            body {
+                font-size: 12pt;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .container {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .card {
+                border: none;
+                box-shadow: none;
+            }
+
+            .d-print-none {
+                display: none !important;
+            }
+
+            table {
+                width: 100%;
+                table-layout: fixed;
+                word-wrap: break-word;
+            }
+
+            th,
+            td {
+                padding: 8px;
+                font-size: 10pt;
+            }
+
+            .card-body,
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-6 mt-3 d-print-none">
+                <button onclick="window.print()" class="btn btn-primary">Print</button>
+            </div>
+            <div class="col-6">
+                <div class="page-title-box">
+                    <app-navigator-upper></app-navigator-upper>
+                    <h4 class="page-title">Payment</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row card">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <img src="assets/template_assets/images/aa_assets/aa_logo_002.png" alt="aa Logo"
+                        height="50">
+                    <b>Payment Request Form</b>
+                    <div>
+                        <strong>Date:</strong> {{pymt.dueDate}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header text-primary">
+                        Budget Overview
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Description</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>A</td>
+                                    <td>Total Budget Amount</td>
+                                    <td>{{pymt.amount}} {{cont.currency}}</td>
+                                </tr>
+                                <tr>
+                                    <td>B</td>
+                                    <td>Cumulative Utilized Budget including this Payment</td>
+                                    <td>{{pymt.paid_amount}} {{cont.currency}}</td>
+                                </tr>
+                                <tr>
+                                    <td>(A-B)-C</td>
+                                    <td>Unutilized Amount from Budget</td>
+                                    <td><!-- Insert Value Here --></td>
+                                </tr>
+                                <tr>
+                                    <td>C/A*100</td>
+                                    <td>Unutilized Percentage</td>
+                                    <td><!-- Insert Value Here --></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header text-primary">
+                        Payment Request Details
+                    </div>
+                    <div class="card-body">
+                        <p><strong>To:</strong> Finance Management Directorate</p>
+                        <p><strong>From:</strong> Director – IT Strategy & Innovation</p>
+                        <p><strong>Re:</strong> Payment Request</p>
+                        <p><strong>Vendor Name:</strong> {{cont.name_vendor}}</p>
+                        <p><strong>Address:</strong> {{cont.location}}</p>
+                        <p><strong>P.O BOX:</strong> {{cont.post_number}}</p>
+                        <p><strong>E-mail:</strong> {{cont.email}}</p>
+                        <span class=""><b>Purpose of Payment</b><span class=" ms-2"
+                                [innerHTML]="pymt.paymentDescription"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header text-primary">
+                        ACH/Wire Transfer
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Account Holder:</strong> {{cont.account_name}}</p>
+                        <p><strong>A/C NO :</strong> {{cont.account_number}}</p>
+                        <p><strong>Open With:</strong> {{cont.bank_name}}</p>
+                        <p><strong>SWIFT:</strong> {{cont.swift_code}}</p>
+                        <p><strong>IBAN:</strong> {{cont.iban}}</p>
+                        <p class=""><b>BENEFICIARY ADDRESS</b><span class=" ms-2"
+                                [innerHTML]="cont.beneficiary_address"></span></p>
+                        <p><strong>BANK BRANCH::</strong> {{cont.branch_name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <h6>Notes:</h6>
+
+                <p>
+                    <strong>Retention Amount:</strong> _____________________________________________
+                </p>
+
+                <p>
+                    <strong>Amount to be paid to the Supplier/Service Provider:</strong>
+                    <span class="text-primary ms-2 fw-bold" [innerHTML]="cont.contract_title"></span>
+                    of {{ cont.contract_type }} for
+                    <span class="ms-2" [innerHTML]="pymt.paymentDescription"></span>
+                    as per the contract {{ cont.currency }} {{ pymt.paid_amount }}
+                    ({{ pymt.paid_amount }} {{ cont.currency }} only) for the period
+                    ({{ cont.start_date }} to {{ cont.end_date }}).
+                </p>
+
+                <p>
+                    <strong>Amount of 2% to be withheld *(30% if the supplier is not TIN registered):</strong>
+                    ____________________________
+                </p>
+
+                <p>
+                    <strong>Cost Center:</strong> ____________________________
+                </p>
+
+                <div *ngIf="pymt.status === '4'" class="text-success">
+                    <i class="mdi mdi-check"></i>
+                    Approved by Division Manager
+                    <span class="text-primary">/ Under Director Review</span>
+                </div>
+
+                <div *ngIf="pymt.status === '5'" class="text-success">
+                    <i class="mdi mdi-check"></i>
+                    Approved by Director
+                    <span class="text-primary">/ Under Senior IT Chief Review</span>
+                </div>
+
+                <div *ngIf="pymt.status === '6'" class="text-success">
+                    <i class="mdi mdi-check"></i>
+                    Approved by Senior IT Chief
+                    <span class="text-primary">/ Under Finance Review</span>
+                </div>
+
+                <div *ngIf="pymt.status === '7'" class="text-success">
+                    <i class="mdi mdi-check"></i>
+                    Approved by Finance
+                </div>
+            </div>
+
+            <div class="col-12 text-end">
+                <p><strong>Prepared by:</strong> {{manager.name}} , Signature: ____________________
+                </p>
+                <p><strong>Requested by:</strong> {{director.name}} , Signature: ____________________</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

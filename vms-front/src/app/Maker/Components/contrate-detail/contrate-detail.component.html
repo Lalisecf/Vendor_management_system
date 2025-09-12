@@ -1,0 +1,374 @@
+<!-- Start Content-->
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <app-navigator-upper></app-navigator-upper>
+                <h4 class="page-title">Contract detail</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body" *ngIf="contractDetail">
+
+                    <!-- Invoice Logo-->
+
+                    <div class="clearfix d-flex align-items-center justify-content-between">
+                        <!-- Logo on the left -->
+                        <div>
+                            <img src="assets/template_assets/images/aa_assets/aa_logo_002.png" alt="" height="50">
+                        </div>
+
+                        <!-- Centered Text -->
+                        <!-- <div class="text-center flex-grow-1">
+                            <h4 class="m-0 d-print-none">Contract detail</h4>
+                        </div> -->
+
+                        <!-- conttract status -->
+                        <div class="text-center flex-grow-1">
+                            <h4 class="m-0" *ngIf="contractDetail.status==1" [ngStyle]="{'color': 'orange'}">Pending
+                                request</h4>
+                            <h4 class="m-0" *ngIf="contractDetail.status==0" [ngStyle]="{'color': 'red'}">Request
+                                Rejected
+                            </h4>
+                            <h4 class="m-0" *ngIf="contractDetail.status==2" [ngStyle]="{'color': 'green'}">
+                                Active Contract <span [ngStyle]="{'color': 'orange'}"
+                                    *ngIf="contractDetail.request_type !='NO'">( there is
+                                    {{contractDetail.request_type}} )</span>
+                            </h4>
+                        </div>
+
+                        <!-- Dropdown Button on the right -->
+
+                        <!-- <a href="javascript:void(0);" *ngIf="contractDetail.status==2" class="btn btn-primary"
+                            (click)="toggleTableHistory()">View addendum contract</a>
+
+                        <a href="javascript:void(0);" *ngIf="contractDetail.status==2" class="btn btn-primary"
+                            (click)="toggleTableHistory()">history</a> -->
+
+                        <div class="btn-group d-print-none">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Actions</button>
+                            <div class="dropdown-menu" *ngIf="role_name == 'Checker'">
+                                <a href="javascript:void(0);" *ngIf="contractDetail.status==1" class="dropdown-item"
+                                    [ngStyle]="{'color': 'green'}" (click)="approveContract()">Approve</a>
+                                <a href="javascript:void(0);" *ngIf="contractDetail.status==1" class="dropdown-item"
+                                    [ngStyle]="{'color': 'red'}" (click)="rejectContract()">Reject</a>
+                                <a class="dropdown-item" href="javascript:void(0);" *ngIf="contractDetail.status==2"
+                                    (click)="toggleTableAddendum()">View Addendum</a>
+                                <a class="dropdown-item" href="javascript:void(0);" *ngIf="contractDetail.status==2"
+                                    (click)="toggleTableHistory()">View History</a>
+                                <a href="javascript:void(0);" *ngIf="contractDetail.status==1" class="dropdown-item">
+                                    Remark</a>
+                                <p href="javascript:void(0);"
+                                    *ngIf="contractDetail.status==2 && contractDetail.request_type == 'NO'"
+                                    class="dropdown-item"> No
+                                    request</p>
+                                <a href="javascript:void(0);"
+                                    *ngIf="contractDetail.status==2 && contractDetail.request_type != 'NO'"
+                                    class="dropdown-item"
+                                    (click)="approveContractRequests(contractDetail.request_type)">
+                                    {{contractDetail.request_type}} </a>
+                            </div>
+
+                            <div class="dropdown-menu" *ngIf="role_name == 'Maker'">
+                                <a href="javascript:void(0);" class="dropdown-item" *ngIf="contractDetail.status==1"
+                                    (click)="editContractByMakerBeforeAproval()">Edit</a>
+                                <a href="javascript:void(0);" class="dropdown-item" *ngIf="contractDetail.status==1"
+                                    (click)="deleteContractBeforeApproval()">Delete</a>
+
+                                <a class="dropdown-item" href="javascript:void(0);" *ngIf="contractDetail.status==2 &&
+                                    contractDetail.request_type=='NO'"
+                                    (click)="changeContractByMakerafterAproval('Update request')">Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0);" *ngIf="contractDetail.status==2 &&
+                                    contractDetail.request_type=='NO'"
+                                    (click)="changeContractByMakerafterAproval('Addendum request')">Add Addendum</a>
+                                <a class="dropdown-item" href="javascript:void(0);" *ngIf="contractDetail.status==2"
+                                    (click)="toggleTableAddendum()">View Addendum</a>
+                                <a class="dropdown-item" href="javascript:void(0);" *ngIf="contractDetail.status==2"
+                                    (click)="toggleTableHistory()">View History</a>
+                                <a class="dropdown-item" href="javascript:void(0);" *ngIf="contractDetail.status==2 &&
+                                    contractDetail.request_type=='NO'"
+                                    (click)="changeContractByMakerafterAproval('Renew request')">Renew</a>
+                                <a class="dropdown-item" href="javascript:void(0);" *ngIf="contractDetail.status==2 &&
+                                    contractDetail.request_type=='NO'"
+                                    (click)="changeContractByMakerafterAproval('terminate request')">Terminate</a>
+
+                                <a class="dropdown-item" href="javascript:void(0);"
+                                    *ngIf="contractDetail.status==2 && contractDetail.request_type !='NO'">There is
+                                    pending {{contractDetail.request_type}}</a>
+
+                                <!-- <a class="dropdown-item" href="javascript:void(0);" *ngIf="contractDetail.status==2"
+                                    href="#">Extend</a> -->
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <table *ngIf="TogleAddendum==true" datatable [dtOptions]="contract_addendum" id="contractAddendum"
+                        class="table table-bordered dt-responsive nowrap w-100">
+                    </table>
+
+                    <table *ngIf="history==true" datatable [dtOptions]="contract_history" id="contractHistory"
+                        class="table table-bordered dt-responsive nowrap w-100">
+                    </table>
+
+                    <!-- Invoice Detail-->
+                    <div class="row">
+                        <b>
+                            <h4 [innerHTML]="contractDetail.contract_title"></h4>
+                        </b>
+
+                    </div>
+
+                    <div class="row  mt-3">
+                        <div class="col-sm-6">
+                            <p> <b>Contract Owner Directorate: </b>{{contractDetail.directorate}} </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p> <b>Vendor name: </b> {{contractDetail.name_vendor}}</p>
+                        </div>
+
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-4">
+                            <div class="mt-3 border p-3 bg-light rounded shadow-sm">
+                                <p class="font-13"><strong>Contract Start Date: </strong> &nbsp;&nbsp;&nbsp;
+                                    {{contractDetail.start_date}}</p>
+                                <p class="font-13"><strong>Contract End Date: </strong> &nbsp;&nbsp;&nbsp;
+                                    {{contractDetail.end_date}}</p>
+                                <p class="font-13"><strong>Total amount: </strong> &nbsp;&nbsp;&nbsp;
+                                    {{contractDetail.total_amount}} &nbsp; {{contractDetail.currency}}</p>
+                                <p class="font-13"><strong>payment Status: </strong> <span
+                                        class="badge bg-success ">{{contractDetail.payment_status}}</span></p>
+                                <!-- <p class="font-13"><strong>Contract ID: </strong> <span class="">#123456</span>
+                                </p> -->
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-sm-4">
+                            <div class="mt-3  border p-3 bg-light rounded shadow-sm">
+                                <!-- <p>{{contractDetail.directorate}}</p> -->
+
+                                <p class="font-13"> <b>Does the contract have SLA? </b> <span class="badge bg-success">
+                                        {{contractDetail.sla}}</span></p>
+                                <p class="font-13"><b>Is Total amount including vat? </b><span
+                                        class="badge bg-success">{{contractDetail.vat}}</span></p>
+                                <p class="font-13"><b>Contract type: </b> {{contractDetail.contract_type}}</p>
+                                <p class="font-13"><b>Payment Method: </b><span class="badge bg-success">
+                                        {{contractDetail.payment_method}}</span></p>
+                                <!-- <p class="text-muted font-13">{{contractDetail.renewal_termination_option}}</p> -->
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mt-3  border p-3 bg-light rounded shadow-sm">
+                                <h6>Contract Document</h6>
+                                <a *ngIf="contractDetail.contract_document_document != null" href="javascript:void(0);"
+                                    class="btn btn-link btn-lg" (click)="downloadContractDocument()">
+                                    <i class="dripicons-download"></i>
+                                    Download
+                                </a>
+
+                                <a *ngIf="contractDetail.contract_document_document != null" href="javascript:void(0);"
+                                    class="btn btn-link" (click)="previewContractDocument()">
+                                    <i class="mdi mdi-eye"></i>
+                                    Preview
+                                </a>
+
+                                <p *ngIf="contractDetail.contract_document_document == null">No Document</p>
+
+
+
+                            </div>
+                            <div *ngIf="isThereAddendum" class="mt-1  border p-2 bg-light rounded shadow-sm">
+                                <a href="javascript:void(0);" (click)="toggleTableAddendum()">This contract has
+                                    Addendum</a>
+                            </div>
+                            <div *ngIf="!isThereAddendum" class="mt-1  border p-2 bg-light rounded shadow-sm">
+                                This contract has no Addendum
+                            </div>
+
+                        </div><!-- end col -->
+
+                    </div>
+
+                    <div class="col-sm-4 mt-4">
+                        <h3>Payments table</h3>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive">
+
+                                <table datatable [dtOptions]="dtOptions_payments" id=""
+                                    class="table table-bordered dt-responsive nowrap w-100">
+                                </table>
+
+                            </div> <!-- end table-responsive-->
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                    <h3>Performance bond information</h3>
+                    <div class="row mt-1 border p-3 bg-light rounded shadow-sm">
+                        <div class="col-sm-3">
+                            <h6>Amount</h6>
+                            <address>
+                                {{contractDetail.bond_amount}}
+                            </address>
+                        </div> <!-- end col-->
+
+                        <div class="col-sm-3">
+                            <h6>Expiry Date</h6>
+                            <address>
+                                {{contractDetail.bond_expiry_date}}
+                            </address>
+                        </div> <!-- end col-->
+
+                        <div class="col-sm-3">
+                            <h6>Issuer Bank</h6>
+                            <address>
+                                {{contractDetail.issuer_bank}}
+                            </address>
+                        </div> <!-- end col-->
+
+                        <div class="col-sm-3">
+                            <h6>Bond Document</h6>
+                            <a *ngIf="contractDetail.security_document != null" href="javascript:void(0);"
+                                class="btn btn-link btn-lg" (click)="downloaSecurityDocument()">
+                                <i class="dripicons-download"></i>
+
+                            </a>
+
+                            <a *ngIf="contractDetail.security_document != null" href="javascript:void(0);"
+                                class="btn btn-link btn-lg" (click)="previewSecurityDocument()">
+                                <i class="mdi mdi-eye"></i>
+
+                            </a>
+                            <p *ngIf="contractDetail.security_document == null">No Document</p>
+                        </div> <!-- end col-->
+
+                    </div>
+                    <a href="javascript:void(0);" (click)="bondHistory()">bond history</a>
+                    <div *ngIf="bond==true">
+                        <h1>
+                            here will display bond history
+                        </h1>
+                    </div>
+                    <!-- end row -->
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="clearfix pt-3">
+                                <h6 class="text-muted">Notes:</h6>
+                                <small>
+                                    All accounts are to be paid within 7 days from receipt of
+                                    invoice. To be paid by cheque or credit card or direct payment
+                                    online. If account is not paid within 7 days the credits details
+                                    supplied as confirmation of work undertaken will be charged the
+                                    agreed quoted fee noted above.
+                                </small>
+                            </div>
+                        </div> <!-- end col -->
+                        <div class="col-sm-6">
+                            <div class="float-end mt-3">
+                                <p><b>Total Contract amount : </b> <span class="float-end">{{
+                                        contractDetail.total_amount
+                                        }} {{contractDetail.currency}}</span></p>
+                                <p><b>Paid amount:</b> <span class="float-end">515.00 {{contractDetail.currency}}</span>
+                                </p>
+                                <p><b>Remaining amount:</b> <span class="float-end">515.00
+                                        {{contractDetail.currency}}</span></p>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row-->
+
+                    <div class="d-print-none mt-4">
+                        <div class="text-end">
+                            <a href="javascript:window.print()" class="btn btn-primary"><i class="mdi mdi-printer"></i>
+                                Print</a> &nbsp;&nbsp;&nbsp;
+                            <a href="javascript: void(0);" class="btn btn-info">Submit</a>
+                        </div>
+                    </div>
+                    <!-- end buttons -->
+
+                </div> <!-- end card-body-->
+                <div *ngIf="!contractDetail">
+
+                    <p>no contract detail found...</p>
+
+                </div>
+            </div> <!-- end card -->
+        </div> <!-- end col-->
+    </div>
+    <!-- end row -->
+
+</div> <!-- container -->
+
+<div id="reason_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static"
+    data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Please enter title and description of {{reason}} reason
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form class="ps-3 pe-3" (ngSubmit)="onSubmitReason()" [formGroup]="reasonForm">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input class="form-control" type="text" id="title" placeholder="Title" formControlName="title"
+                            autocomplete="off">
+                        <div class="valid-feedback" *ngIf="
+                    submitted && reasonForm.controls['title'].valid
+                  ">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="submitted && reasonForm.controls['title'].errors?.['required']">
+                            Please enter title.
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="submitted && reasonForm.controls['title'].errors?.['minlength']">
+                            At least 2 Characters.
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="submitted && reasonForm.controls['title'].errors?.['maxlength']">
+                            At most 30 Characters.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <quill-editor class="form-control" type="text" id="description" placeholder="Description"
+                            formControlName="description"></quill-editor>
+                        <div class="valid-feedback" *ngIf="submitted && reasonForm.controls['description'].valid">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="submitted && reasonForm.controls['description'].errors?.['required']">
+                            Please enter description for {{reason}} reason.
+                        </div>
+                    </div>
+                    <div class="mb-3 text-center modal-footer">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+</swal>

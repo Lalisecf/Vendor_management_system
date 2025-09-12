@@ -1,0 +1,488 @@
+<div class="row">
+  <div class="col-12">
+    <div class="page-title-box">
+      <app-navigator-upper></app-navigator-upper>
+      <h4 *ngIf="vendor_id == null" class="page-title">Register vendor</h4>
+      <h4 *ngIf="vendor_id != null" class="page-title">Update vendor</h4>
+      <div class="card">
+        <div class="card-body">
+          <!-- <h4 *ngIf="vendor_id == null" class="header-title">Register</h4>
+          <h4 *ngIf="vendor_id != null && role_name !='Checker'" class="header-title">Update</h4> -->
+
+          <div class="row mt-4" *ngIf="vendor_id != null && role_name =='Checker'">
+            <table datatable [dtOptions]="dtOptions" id="users_table"
+              class="table table-bordered dt-responsive nowrap w-100">
+
+            </table>
+          </div>
+
+
+          <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="activeTab === 1" (click)="selectTab(1)">
+                <i class="mdi mdi-account-circle font-18"></i>
+                <span class="d-none d-lg-block">Vendor Informaton</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="activeTab === 2" (click)="selectTab(2)">
+                <i class="mdi mdi-cash-multiple font-18"></i>
+                <span class="d-none d-lg-block">Documents</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="activeTab === 3" (click)="selectTab(3)">
+                <i class="mdi mdi-bank font-18"></i>
+                <span class="d-none d-lg-block">Bank detail</span>
+              </a>
+            </li>
+          </ul>
+
+
+
+          <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+            <div class="tab-content">
+              <div class="tab-pane" [ngClass]="{'active': activeTab === 1}" id="vendor-information">
+                <div class="row">
+                  <div class="mb-3 col-sm-4">
+                    <label for="name" class="form-label">Vendor Name *</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="name" formControlName="name" placeholder="Vendor Name"
+                        autocomplete="off" />
+                      <div class="invalid-feedback"
+                        *ngIf="submitted && registerForm.controls['name'].errors?.['required']">
+                        Please enter name of the vendor.
+                      </div>
+                      <div class="invalid-feedback"
+                        *ngIf="submitted && registerForm.controls['name'].errors?.['minlength']">
+                        At least 5 Characters.
+                      </div>
+                      <div class="invalid-feedback"
+                        *ngIf="submitted && registerForm.controls['name'].errors?.['maxlength']">
+                        At most 700 Characters.
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="col-sm-1">
+                    <label for="name" class="form-label"></label>
+                    <div class="input-group">
+                      <i class="mdi mdi-code">Country Code</i>
+
+                    </div>
+
+                  </div>
+
+
+                  <div class="mb-3 ml-4 col-sm-3">
+                    <label for="phone_number" class="form-label">Phone Number</label>
+                    <div class="input-group">
+                      <ngx-intl-tel-input [preferredCountries]="[CountryISO.Ethiopia, CountryISO.UnitedKingdom]"
+                        (countryChange)="onCountryChange($event)" [enableAutoCountrySelect]="true"
+                        [enablePlaceholder]="true" [searchCountryFlag]="true"
+                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                        [selectedCountryISO]="CountryISO.Ethiopia" [phoneValidation]="true" name="phone_number"
+                        formControlName="phone_number">
+                      </ngx-intl-tel-input>
+                      <div *ngIf="submitted" class="invalid-feedback">
+                        <!-- <div *ngIf="registerForm.controls['phone_number'].errors?.['required']">Phone number is
+                          required.</div> -->
+                        <div
+                          *ngIf="registerForm.controls['phone_number'].errors?.['validatePhoneNumber'] && IsEthiopianPhone==false">
+                          Phone number is invalid.</div>
+                          <div
+                          *ngIf="registerForm.controls['phone_number'].errors?.['validatePhoneNumber'] && IsEthiopianPhone==true">
+                          Phone number is invalid.</div>
+                        <div
+                          *ngIf="registerForm.controls['phone_number'].errors?.['validatePhoneNumber'] && IsEthiopianPhone && Phoneformat==false">
+                          use format "+2517"</div>
+                        <div
+                          *ngIf="registerForm.controls['phone_number'].errors?.['invalidPhoneNumber'] && IsEthiopianPhone">
+                          Phone number must start with "09" or "07" for local numbers, or "+2519" or "+2517" for
+                          international format.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-4">
+                    <label for="fax_number" class="form-label">Fax Number</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="fax_number" formControlName="fax_number"
+                        placeholder="fax Number" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="mb-3 col-sm-4">
+                    <label for="email" class="form-label">Email </label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="email" formControlName="email" placeholder="email"
+                        autocomplete="off" />
+                      <div class="invalid-feedback"
+                        *ngIf="submitted && registerForm.controls['email'].errors?.['required']">
+                        Email is requierd.
+                      </div>
+                      <div class="invalid-feedback"
+                        *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].errors?.['email']">
+                        Please enter valid email.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-4">
+                    <label for="name" class="form-label">Website</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="website" formControlName="website"
+                        placeholder="Website" autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-4">
+                    <label for="location" class="form-label">Country of registration *</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="location" formControlName="location"
+                        placeholder="Country.." autocomplete="off" />
+                      <div class="invalid-feedback"
+                        *ngIf="submitted && registerForm.controls['location'].errors?.['required']">
+                        Please enter country of registration.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <div class="mb-3 col-sm-12">
+                    <label for="address" class="form-label">Address *</label>
+                    <textarea class="form-control" id="address" formControlName="address" rows="2"
+                      placeholder="Enter address here"></textarea>
+                    <div class="invalid-feedback"
+                      *ngIf="submitted && registerForm.controls['address'].errors?.['required']">
+                      Please enter an address.
+                    </div>
+                  </div>
+                  <!-- <div class="mb-3 col-sm-4">
+                    <label for="industry" class="form-label">Industry</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="industry" formControlName="industry"
+                        placeholder="industry" autocomplete="off" />
+                    </div>
+                  </div> -->
+                
+                <div class="row">
+                  <div class="mb-3 col-sm-6">
+                    <label for="product" class="form-label">Vendor Category</label>
+                    <app-multi-dropdown-product></app-multi-dropdown-product>
+
+                  </div>
+                  <div class="mb-3 col-sm-6">
+                    <label for="post_number" class="form-label">Post Number</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="post_number" formControlName="post_number"
+                        placeholder="post Number" autocomplete="off" />
+                    </div>
+                  </div>
+
+                </div>
+                <!-- <div class="row">
+                  <div class="mb-3 col-sm-6">
+                    <label for="product" class="form-label">Vendor Category</label>
+                    <app-multi-dropdown-product></app-multi-dropdown-product>
+                  </div>
+
+                  <div class="mb-3 col-sm-6">
+                    <label for="service" class="form-label">Services Offered</label>
+                    <app-multi-dropdown-service></app-multi-dropdown-service>
+                   
+                  </div>
+                </div> -->
+              </div>
+              <div class="tab-pane" [ngClass]="{'active': activeTab === 2}" id="vendor-document">
+                <div class="row">
+                  <div class="mb-3 col-sm-3">
+                    <label for="general_document" class="form-label">Trade Licence</label>
+                    <div class="form-floating">
+                      <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload" accept="application/pdf"
+                        [processDirectoryDrop]="false" [ngClass]="{
+                        'light-ngx-dropzone':
+                          this.localStorageService.retrieve('theme').trim() ==
+                          'light'.trim(),
+                        'dark-ngx-dropzone':
+                          this.localStorageService.retrieve('theme').trim() !=
+                          'light'.trim()
+                      }" (change)="onFileSelect2($event)" [multiple]="true" [maxFileSize]="maxFileSize">
+                        <ngx-dropzone-label>
+                          <i class="h1 text-muted dripicons-cloud-upload"></i><br>
+                          <!-- <h3>Drop files here or click to upload.</h3> -->
+                          <span class="text-muted font-13">Drop files here or click to upload
+                          </span>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files2" [removable]="true" (removed)="onRemove2(files2)">
+                          <ngx-dropzone-label>{{
+                            files2.at(0)!.name
+                            }}</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                      </ngx-dropzone>
+                      <div *ngIf="fileSizeError2==='error'">
+                        <p class="text-danger">File size exceeds the maximum limit of 8MB.</p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="mb-3 col-sm-2" *ngIf="moreDocuments==false" style="margin-top: 10%;">
+                    <a href="javascript:void(0);" (click)="moreDocument()" class="dropdown-item notify-item">
+                      <i class="mdi mdi-more me-1"></i>
+                      <span>More Documents</span>
+                    </a>
+                  </div>
+                  <div class="mb-3 col-sm-3" *ngIf="moreDocuments==true">
+                    <label for="general_document" class="form-label">General Document</label>
+                    <div class="form-floating">
+                      <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload" accept="application/pdf"
+                        [processDirectoryDrop]="false" [ngClass]="{
+                          'light-ngx-dropzone':
+                            this.localStorageService.retrieve('theme').trim() ==
+                            'light'.trim(),
+                          'dark-ngx-dropzone':
+                            this.localStorageService.retrieve('theme').trim() !=
+                            'light'.trim()
+                        }" (change)="onFileSelect1($event)" [multiple]="true" [maxFileSize]="maxFileSize">
+                        <ngx-dropzone-label>
+                          <i class="h1 text-muted dripicons-cloud-upload"></i><br>
+                          <!-- <h3>Drop files here or click to upload.</h3> -->
+                          <span class="text-muted font-15">Drop files here or click to upload
+                          </span>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(files)">
+                          <ngx-dropzone-label>
+                            {{
+                            files.at(0)!.name
+                            }}</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                      </ngx-dropzone>
+                      <div *ngIf="fileSizeError1==='error'">
+                        <p class="text-danger">File size exceeds the maximum limit of 8MB.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-3" *ngIf="moreDocuments==true">
+                    <label for="general_document" class="form-label">Tin Certificate</label>
+                    <div class="form-floating">
+                      <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload" accept="application/pdf"
+                        [processDirectoryDrop]="false" [ngClass]="{
+                        'light-ngx-dropzone':
+                          this.localStorageService.retrieve('theme').trim() ==
+                          'light'.trim(),
+                        'dark-ngx-dropzone':
+                          this.localStorageService.retrieve('theme').trim() !=
+                          'light'.trim()
+                      }" (change)="onFileSelect3($event)" [multiple]="true" [maxFileSize]="maxFileSize">
+                        <ngx-dropzone-label>
+                          <i class="h1 text-muted dripicons-cloud-upload"></i><br>
+
+                          <span class="text-muted font-13">Drop files here or click to upload
+                          </span>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files3" [removable]="true" (removed)="onRemove3(files3)">
+                          <ngx-dropzone-label>{{
+                            files3.at(0)!.name
+                            }}</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                      </ngx-dropzone>
+                      <div *ngIf="fileSizeError3==='error'">
+                        <p class="text-danger">File size exceeds the maximum limit of 8MB.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-3" *ngIf="moreDocuments==true">
+                    <label for="general_document" class="form-label">Other Document</label>
+                    <div class="form-floating">
+                      <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload" accept="application/pdf"
+                        [processDirectoryDrop]="false" [ngClass]="{
+                        'light-ngx-dropzone':
+                          this.localStorageService.retrieve('theme').trim() ==
+                          'light'.trim(),
+                        'dark-ngx-dropzone':
+                          this.localStorageService.retrieve('theme').trim() !=
+                          'light'.trim()
+                      }" (change)="onFileSelect4($event)" [multiple]="true" [maxFileSize]="maxFileSize">
+                        <ngx-dropzone-label>
+                          <i class="h1 text-muted dripicons-cloud-upload"></i><br>
+                          <!-- <h3>Drop files here or click to upload.</h3> -->
+                          <span class="text-muted font-13">Drop files here or click to upload
+                          </span>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files4" [removable]="true" (removed)="onRemove4(files4)">
+                          <ngx-dropzone-label>{{
+                            files4.at(0)!.name
+                            }}</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                      </ngx-dropzone>
+                      <div *ngIf="fileSizeError4==='error'">
+                        <p class="text-danger">File size exceeds the maximum limit of 8MB.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <div class="mb-3 col-sm-6">
+                    <label for="example-textarea" class="form-label">Document Description</label>
+                    <textarea class="form-control" id="example-textarea" rows="8"
+                      formControlName="general_document_descreption" placeholder="Document description if any..."
+                      autocomplete="off"></textarea>
+                  </div> -->
+                </div>
+
+              </div>
+              <div class="tab-pane" [ngClass]="{'active': activeTab === 3}" id="bank-detail">
+                <div class="row">
+                  <div class="mb-3 col-sm-4">
+                    <label for="bank_name" class="form-label">Bank Name</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="bank_name" formControlName="bank_name"
+                        placeholder="Bank Name" autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-4">
+                    <label for="branch_name" class="form-label">Branch name</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="branch_name" formControlName="branch_name"
+                        placeholder="Branch Name" autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-4">
+                    <label for="account_name" class="form-label">Account Name</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="account_name" formControlName="account_name"
+                        placeholder="Account name" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="mb-3 col-sm-4">
+                    <label for="account_number" class="form-label">Account Number</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="account_number" formControlName="account_number"
+                        placeholder="Bank Name" autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-4">
+                    <label for="swift_code" class="form-label">Swift Code</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="swift_code" formControlName="swift_code"
+                        placeholder="Swift Code" autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-4">
+                    <label for="IBAN" class="form-label">IBAN</label>
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="IBAN" formControlName="iban"
+                        placeholder="IBAN" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="mb-3 col-sm-12">
+                    <label for="beneficiary_address" class="form-label">Beneficoiary address: </label>
+                    <div class="form-group mt-10">
+                      <quill-editor [placeholder]="'beneficiary address'" formControlName="beneficiary_address"
+                        style="width:100%"></quill-editor>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+
+              <button *ngIf="activeTab > 1" type="button" class="btn btn-secondary"
+                (click)="previousTab()">Previous</button>
+
+              <button *ngIf="activeTab ===2" type="button" class="btn btn-primary" (click)="nextTab()">Next</button>
+
+              <button *ngIf="activeTab === 1" type="button" class="btn btn-primary ms-auto"
+                (click)="nextTab()">Next</button>
+
+
+              <button *ngIf="activeTab === 3 && vendor_id == null" type="submit" class="btn btn-success"
+                [disabled]="!registerForm.valid">Submit</button>
+
+              <button *ngIf="activeTab === 3 && vendor_id != null && role_name != 'Checker'" type="submit"
+                class="btn btn-success" [disabled]="!registerForm.valid">Update</button>
+
+              <button *ngIf="activeTab === 3 && vendor_id != null && role_name == 'Checker'"
+                (click)="rejectUpdateRequests()" class="btn btn-danger">Reject Update Request </button>
+
+              <button *ngIf="activeTab === 3 && vendor_id != null && role_name == 'Checker'" type="submit"
+                class="btn btn-success" [disabled]="!registerForm.valid">Accept update request</button>
+
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="reason_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Please enter title and description of Reject vendor update
+          request reason</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form class="ps-3 pe-3" (ngSubmit)="onSubmitReason()" [formGroup]="reasonForm">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input class="form-control" type="text" id="title" placeholder="Title" formControlName="title"
+              autocomplete="off">
+            <div class="valid-feedback" *ngIf="
+                submitted && reasonForm.controls['title'].valid
+              ">
+              Looks good!
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && reasonForm.controls['title'].errors?.['required']">
+              Please enter title.
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && reasonForm.controls['title'].errors?.['minlength']">
+              At least 2 Characters.
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && reasonForm.controls['title'].errors?.['maxlength']">
+              At most 30 Characters.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <quill-editor class="form-control" type="text" id="description" placeholder="Description"
+              formControlName="description"></quill-editor>
+            <div class="valid-feedback" *ngIf="submitted && reasonForm.controls['description'].valid">
+              Looks good!
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && reasonForm.controls['description'].errors?.['required']">
+              Please enter description for reject vender update reason.
+            </div>
+          </div>
+          <div class="mb-3 text-center modal-footer">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<swal #SuccessSwalRegisterVendor title="Success" text="Request sent successfully!" icon="success"
+  [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SuccessSwalUpdateVendor title="Success" text="Request sent successfully!" icon="success"
+  [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SuccessSwalUpdatedVendor title="Success" text="Request Approved successfully!" icon="success"
+  [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+  [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+</swal>

@@ -1,0 +1,259 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <app-navigator-upper></app-navigator-upper>
+
+            <h4 class="page-title">{{type}} Report !</h4>
+            <div class="card" *ngIf="type !='Select-Type'">
+                <div class="card-body">
+
+                    <div class="continer mb-4">
+
+                        <div class="row mt-4" *ngIf="vendor_id != null && role_name =='Checker'">
+                            <table datatable [dtOptions]="dtOptions" id="users_table"
+                                class="table table-bordered dt-responsive nowrap w-100">
+
+                            </table>
+                        </div>
+                        <div class="row mt-4">
+                            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+                                <div class="row">
+                                    <!-- <div class="mb-3 col-sm-6" *ngIf="type=='Spesfic'">
+                                        <label for="vendor" class="form-label">Vendor</label>
+                                        <div class="form-group">
+                                            <select formControlName="id" class="form-select">
+                                                <option *ngFor="let vendor of vendor" [value]="vendor.id">{{
+                                                    vendor.name }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['id'].errors?.['required']">
+                                            Please Select Vendor.
+                                        </div>
+                                    </div> -->
+
+                                    <div class="mb-3 col-sm-6" *ngIf="type === 'Spesfic'">
+                                        <label for="vendor" class="form-label "><i class="mdi mdi-select text-warning"></i> Vendor</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control"
+                                                placeholder="Please search the required Vendor here!"
+                                                (input)="filterVendors($event)" formControlName="searchIn" >
+                                            <select formControlName="id" class="form-select">
+                                                <option [ngValue]="null" disabled selected
+                                                    style="background-color: orange; color: white;">Please Select the
+                                                    required Vendor</option>
+                                                <option *ngFor="let vendor of filteredVendors" [value]="vendor.id">{{
+                                                    vendor.name }}</option>
+                                            </select>
+
+
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="submitted && registerForm.controls['id'].errors?.['required']">
+                                            Please Select Vendor.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-sm-6 mt-2">
+                                        <label for="exampleInputEmail1"> <i class="mdi mdi-select text-warning"></i> Contract Start Date</label>
+
+                                        <div class="form-floating">
+                                            <input type="text" placeholder="Datepicker" class="form-control"
+                                                autocomplete="off" id="floatingInput" bsDaterangepicker
+                                                formControlName="start_date"
+                                                (bsValueChange)="contractStartDateValueChange($event)" />
+                                            <label for="floatingInput">Select range</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-sm-6 mt-2">
+                                        <label for="exampleInputEmail1"> <i class="mdi mdi-select text-warning"></i> Contract End Date</label>
+
+                                        <div class="form-floating">
+                                            <input type="text" placeholder="Datepicker" class="form-control"
+                                                autocomplete="off" id="floatingInput" bsDaterangepicker
+                                                formControlName="end_date"
+                                                (bsValueChange)="contractEndDateValueChange($event)" />
+                                            <label for="floatingInput">Select range</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-sm-6">
+                                        <label for="payment_frequency" class="form-label"> <i class="mdi mdi-select text-warning"></i>Contract Payment frequency
+                                        </label>
+                                        <div class="input-group">
+                                            <select class="form-select" formControlName="payment_frequency"
+                                                (change)="onChange($event)">
+                                                <option [ngValue]="null" disabled selected
+                                                    style="background-color: orange; color: white;">Please Select the
+                                                    required frequency</option>
+                                                <!-- <option value="aaaaaaa" selected>Please select menu</option> -->
+                                                <option value="monthly">Monthly</option>
+                                                <option value="quarterly">Quarterly</option>
+                                                <option value="semi_anualy">Semi-anually</option>
+                                                <option value="anualy">Anually</option>
+                                                <option value="phased">Phased</option>
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['payment_frequency'].errors?.['required']">
+                                            Please Select Contract Payment Frequency.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-sm-6 mt-2">
+                                        <label for="exampleInputEmail1"> <i class="mdi mdi-select text-warning"></i> Contract Payment Date</label>
+
+                                        <div class="form-floating">
+                                            <input type="text" placeholder="Datepicker" class="form-control"
+                                                autocomplete="off" id="floatingInput" bsDaterangepicker
+                                                formControlName="payment_date"
+                                                (bsValueChange)="contractPaymentDateValueChange($event)" />
+                                            <label for="floatingInput">Select range</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="mb-3 col-sm-6"
+                                    style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary" (click)="downloadPdf()"><i
+                                                class="mdi mdi-file-pdf me-1"></i>
+                                            <span>Download</span></button>
+                                        <button type="button"
+                                            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="visually-hidden">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="javascript:void(0);"
+                                                (click)="downloadPdf()"><i class="mdi mdi-file-pdf me-1"></i>
+                                                <span>PDF</span></a>
+                                            <a class="dropdown-item" href="javascript:void(0);"
+                                                (click)="downloadExcel()"><i class="mdi mdi-microsoft-excel me-1"></i>
+                                                <span>Excel</span></a>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary" (click)="previewPdf()"><i
+                                            class="mdi mdi-file-eye me-1"></i> <span>Preview PDF</span> </button>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary" (click)="resetAll()"><i
+                                                class="mdi mdi-reset"></i>
+                                            <span>Reset</span></button>
+                                        <button type="button"
+                                            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="visually-hidden">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="javascript:void(0);"
+                                                (click)="resetvendor()"><i class="mdi mdi-reset"></i>
+                                                <span>Vendor</span></a>
+                                            <a class="dropdown-item" href="javascript:void(0);"
+                                                (click)="resetStartDate()"><i class="mdi mdi-reset"></i>
+                                                <span>Contract Start Date</span></a>
+
+                                                  <a class="dropdown-item" href="javascript:void(0);"
+                                                (click)="resetEndDate()"><i class="mdi mdi-reset"></i>
+                                                <span>Contract End Date</span></a>
+
+                                                  <a class="dropdown-item" href="javascript:void(0);"
+                                                (click)="resetPaymentDate()"><i class="mdi mdi-reset"></i>
+                                                <span>Contract Paymen Date</span></a>
+
+                                                  <a class="dropdown-item" href="javascript:void(0);"
+                                                (click)="resetFrequency()"><i class="mdi mdi-reset"></i>
+                                                <span>Contract Frequency </span></a>
+
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <div class="row" *ngIf="preview">
+                            <pdf-viewer [src]="file_to_preview" [render-text]="true" [original-size]="true"
+                                style="width: 100%; height: 100vh;" [show-all]="true"></pdf-viewer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-3" *ngIf="type =='Select-Type'" >
+                <H3 class="mdi mdi-select text-primary"><i class="text-warning"> Please Select Type of Report from the left side Report Menue !!!</i></H3>
+                </div>
+        </div>
+    </div>
+</div>
+<div id="reason_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static"
+    data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Please enter title and description of Reject vendor
+                    update
+                    request reason</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form class="ps-3 pe-3" (ngSubmit)="onSubmitReason()" [formGroup]="reasonForm">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input class="form-control" type="text" id="title" placeholder="Title" formControlName="title"
+                            autocomplete="off">
+                        <div class="valid-feedback" *ngIf="
+                  submitted && reasonForm.controls['title'].valid
+                ">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="submitted && reasonForm.controls['title'].errors?.['required']">
+                            Please enter title.
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="submitted && reasonForm.controls['title'].errors?.['minlength']">
+                            At least 2 Characters.
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="submitted && reasonForm.controls['title'].errors?.['maxlength']">
+                            At most 30 Characters.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <quill-editor class="form-control" type="text" id="description" placeholder="Description"
+                            formControlName="description"></quill-editor>
+                        <div class="valid-feedback" *ngIf="submitted && reasonForm.controls['description'].valid">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="submitted && reasonForm.controls['description'].errors?.['required']">
+                            Please enter description for reject vender update reason.
+                        </div>
+                    </div>
+                    <div class="mb-3 text-center modal-footer">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<swal #SuccessSwalRegisterVendor title="Success" text="Request sent successfully!" icon="success"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SuccessSwalUpdateVendor title="Success" text="Request sent successfully!" icon="success"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SuccessSwalUpdatedVendor title="Success" text="Request sent successfully!" icon="success"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+</swal>

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Angular003Application<VMS_BACK-vms-back>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "project.Angular003Application",
+            "projectName": "VMS_BACK-vms-back",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

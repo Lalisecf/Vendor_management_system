@@ -1,0 +1,83 @@
+<div class="col-12">
+    <div class="page-title-box">
+      <app-navigator-upper></app-navigator-upper>
+      <h4 class="page-title">Addendum Payment detail</h4>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body" *ngIf="paymentDetail">
+          <!-- Invoice Logo -->
+          <div class="clearfix d-flex align-items-center justify-content-between">
+            <div>
+              <img src="assets/template_assets/images/aa_assets/aa_logo_002.png" alt="" height="50">
+            </div>
+  
+            <div class="text-center flex-grow-1">
+              <h4 class="m-0 d-print-none">Addendum Payment Detail</h4>
+            </div>
+  
+            <div class="text-center flex-grow-1">
+              <h4 class="m-0" *ngIf="paymentDetail.status == 2 || paymentDetail.status == 4 || paymentDetail.status == 6" [ngStyle]="{'color': 'orange'}">Pending Request</h4>
+              <h4 class="m-0" *ngIf="paymentDetail.status == 3" [ngStyle]="{'color': 'red'}">Request Rejected</h4>
+            </div>
+  
+            <!-- Dropdown Button on the right -->
+            <div class="btn-group d-print-none">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Actions</button>
+              <div class="dropdown-menu" *ngIf="role_name == 'Manager'">
+                <a href="javascript:void(0);" *ngIf="paymentDetail.status == 2|| paymentDetail.status == 4 || paymentDetail.status == 6 || paymentDetail.status == 5" class="dropdown-item" [ngStyle]="{'color': 'green'}" (click)="approvePayment()">Approve</a>
+                <a href="javascript:void(0);" *ngIf="paymentDetail.status == 2|| paymentDetail.status == 4 || paymentDetail.status == 6 || paymentDetail.status == 5" class="dropdown-item" [ngStyle]="{'color': 'red'}" (click)="rejectPayment()">Reject</a>
+                <a href="javascript:void(0);" *ngIf="paymentDetail.status == 3" class="dropdown-item">Rejected</a>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Invoice Detail -->
+          <div class="row">
+            <b><h4 [innerHTML]="paymentDetail.paymentTerm"></h4></b>
+          </div>
+  
+          <div class="row mb-3">
+            <div class="col-sm-6">
+              <div class="mt-5 border p-3 bg-light rounded shadow-sm">
+                <p class="font-13"><strong>Total Amount:</strong>&nbsp;&nbsp;&nbsp;{{paymentDetail.amount}}</p>
+                <p class="font-13"><strong>Due Date:</strong>&nbsp;&nbsp;&nbsp;{{paymentDetail.dueDate}}</p>
+                <p class="font-13"><strong>Description:</strong>&nbsp;&nbsp;&nbsp;<span [innerHTML]="paymentDetail.paymentDescription"></span></p>
+
+              </div>
+            </div><!-- end col -->
+            
+            <!-- Add a new column for Initiated By and Date on the right -->
+            <div class="col-sm-6">
+              <div class="mt-5 border p-3 bg-light rounded shadow-sm">
+                <p class="font-13"><strong>Addendum Id:</strong>&nbsp;&nbsp;&nbsp;{{paymentDetail.addendum_id}}</p>
+                <p class="font-13"><strong>Initiated By:</strong>&nbsp;&nbsp;&nbsp;{{paymentDetail.initait_by}}</p>
+                <p class="font-13"><strong>Initiated Date:</strong>&nbsp;&nbsp;&nbsp;{{paymentDetail.initaited_date}}</p>
+              </div>
+            </div><!-- end col -->
+          </div>
+  
+          <div class="col-sm-4 mt-4">
+            <h3>Doc Table</h3>
+          </div>
+
+          <div class="row mt-4">
+            <div class="row mt-4">
+              <table datatable [dtOptions]="dtOptions" id=""
+                class="table table-bordered dt-responsive nowrap w-100">
+        
+            </table>
+          </div>
+
+
+      
+      <swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+          [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+      </swal>          
+
+
+       

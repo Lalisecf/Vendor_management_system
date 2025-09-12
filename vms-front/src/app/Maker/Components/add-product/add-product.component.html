@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <app-navigator-upper></app-navigator-upper>
+            <h4 *ngIf="product_id == null" class="page-title">Register Category</h4>
+            <h4 *ngIf="product_id != null" class="page-title">Update Category</h4>
+            <div class="card">
+                <div class="card-body">
+                    <h4 *ngIf="product_id == null" class="header-title">Register</h4>
+                    <h4 *ngIf="product_id != null" class="header-title">Update</h4>
+                    <div class="continer mb-4">
+                        <div class="row mt-4">
+                            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Category Name</label>
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" id="name"
+                                                formControlName="name" placeholder="Category Name"
+                                                autocomplete="off" />
+                                            <div class="valid-feedback" *ngIf="submitted && registerForm.controls['name'].valid">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf="submitted && registerForm.controls['name'].errors?.['required']">
+                                                Please enter Category name.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100"> </div>
+                                </div>
+                                <label for="name" class="form-label">Description</label>
+                                    <div class="continer mb-2">
+                                        <div class="form-group mt-10">
+                                          <quill-editor
+                                            [placeholder]="'Enter description'"
+                                            formControlName="description"
+                                            style="width:100%"
+                                          ></quill-editor>
+                                        </div>
+                                        
+                                        <div
+                                          class="invalid-feedback"
+                                          *ngIf="submitted &&  registerForm.controls['description'] && registerForm.controls['description'].errors?.['required']"
+                                        >
+                                          Please enter description.
+                                        </div>
+                            
+                                      </div>
+   
+                               
+                                <div class="mb-3 text-center">
+                                    <button *ngIf="product_id == null" class="btn btn-primary" type="submit">
+                                        Register
+                                    </button>
+                                    <button *ngIf="product_id != null" class="btn btn-primary" type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<swal #SuccessSwalRegisterProduct title="Success" text="Product registered successfully!" icon="success"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SuccessSwalUpdateProduct title="Success" text="Product information updated successfully!" icon="success"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+</swal>

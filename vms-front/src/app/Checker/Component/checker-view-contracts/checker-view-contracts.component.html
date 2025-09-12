@@ -1,0 +1,901 @@
+<div class="row">
+  <div class="col-12">
+    <div class="page-title-box">
+      <app-navigator-upper></app-navigator-upper>
+      <h4 class="page-title">Contracts</h4>
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">List of Contracts</h4>
+          <div class="continer mb-4">
+            <div class="row">
+              <div class="row d-flex justify-content-end">
+                <button id="reset_button" class="btn btn-primary" style="width: fit-content"
+                  (click)="clearAllSearches()">
+                  Reset
+                </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <!-- <button class="btn btn-secondary" style="width: fit-content" (click)="reload()">
+                  Reload
+                </button> -->
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <table datatable [dtOptions]="dtOptions" id="contract_table"
+                class="table table-bordered dt-responsive nowrap w-100">
+                <!-- <tfoot>
+                  <tr style="border-top: none !important">
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" [ngModel]="input_0" id="{{ first_column_id }}"
+                          name="search-id" class="form-control {{ first_column_id }} _id" />
+                        <label for="floatingInput">Id</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ second_column_id }}" name="search-first-name"
+                          [ngModel]="input_1" class="form-control {{ second_column_id }} _firstname" />
+
+                        <label for="floatingInput">Vendor Name</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ third_column_id }}" name="search-last-name"
+                          [ngModel]="input_2" class="form-control {{ third_column_id }} _middlename" />
+
+                        <label for="floatingInput"> Product</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ fourth_column_id }}" name="search-last-name"
+                          [ngModel]="input_3" class="form-control {{ fourth_column_id }} _lastname" />
+
+                        <label for="floatingInput">Service</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ fifth_column_id }}" name="search-last-name"
+                          [ngModel]="input_4" class="form-control {{ fifth_column_id }} _gender" />
+
+                        <label for="floatingInput"> Contract type</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ sixth_column_id }}" name="search-last-name"
+                          [ngModel]="input_5" class="form-control {{ sixth_column_id }} _role" />
+
+                        <label for="floatingInput">Contract start Date</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ seventh_column_id }}" name="search-last-name"
+                          [ngModel]="input_6" class="form-control {{ seventh_column_id }} _email" />
+
+                        <label for="floatingInput">Contract end Date</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ eighth_column_id }}" name="search-last-name"
+                          [ngModel]="input_7" class="form-control {{
+                                  eighth_column_id
+                                }} _phonenumber" />
+
+                        <label for="floatingInput">Payment method </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ ninth_column_id }}" name="search-last-name"
+                          [ngModel]="input_8" class="form-control {{ ninth_column_id }} _reg_date" />
+
+                        <label for="floatingInput">Payment frequency</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ tenth_column_id }}" name="search-last-name"
+                          [ngModel]="input_9" class="form-control {{ tenth_column_id }} _status" />
+
+                        <label for="floatingInput">Currency</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ eleventh_column_id }}" name="search-last-name"
+                          [ngModel]="input_10" class="form-control {{
+                                  eleventh_column_id
+                                }} _change_status" />
+
+                        <label for="floatingInput">Amount per frequency</label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ twelfth_column_id }}" name="search-last-name"
+                          [ngModel]="input_11" class="form-control {{ twelfth_column_id }} _action" />
+
+                        <label for="floatingInput">Late penality fee </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ thirteenth_column_id }}" name="search-last-name"
+                          [ngModel]="input_12" class="form-control {{ thirteenth_column_id }} _action" />
+
+                        <label for="floatingInput">Payment status </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ fourteenth_column_id }}" name="search-last-name"
+                          [ngModel]="input_13" class="form-control {{ fourteenth_column_id }} _action" />
+
+                        <label for="floatingInput">Payment start date </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ fiveteenth_column_id }}" name="search-last-name"
+                          [ngModel]="input_14" class="form-control {{ fiveteenth_column_id }} _action" />
+
+                        <label for="floatingInput">Payment end date </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ sixteenth_column_id }}" name="search-last-name"
+                          [ngModel]="input_15" class="form-control {{ sixteenth_column_id }} _action" />
+
+                        <label for="floatingInput">Security document </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ seveteenth_column_id }}" name="search-last-name"
+                          [ngModel]="input_16" class="form-control {{ seveteenth_column_id }} _action" />
+
+                        <label for="floatingInput">Security document discription </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ eighteenth_column_id }}" name="search-last-name"
+                          [ngModel]="input_17" class="form-control {{ eighteenth_column_id }} _action" />
+
+                        <label for="floatingInput">Total paid amount </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ _20th_column_id }}" name="search-last-name"
+                          [ngModel]="input_19" class="form-control {{ _20th_column_id }} _action" />
+
+                        <label for="floatingInput">Contract document </label>
+                      </div>
+                    </th>
+                    <th>
+                        <div class="form-floating">
+                          <input type="text" id="floatingInput" id="{{ _21th_column_id }}" name="search-last-name"
+                            [ngModel]="input_20" class="form-control {{ _21th_column_id }} _action" />
+  
+                          <label for="floatingInput">SLA document </label>
+                        </div>
+                      </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ _22th_column_id }}" name="search-last-name"
+                          [ngModel]="input_21" class="form-control {{ _22th_column_id }} _action" />
+
+                        <label for="floatingInput">Total contract amount </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ _23th_column_id }}" name="search-last-name"
+                          [ngModel]="input_22" class="form-control {{ _23th_column_id }} _action" />
+
+                        <label for="floatingInput">Status </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="form-floating">
+                        <input type="text" id="floatingInput" id="{{ _25th_column_id }}" name="search-last-name"
+                          [ngModel]="input_24" class="form-control {{ _25th_column_id }} _action" />
+
+                        <label for="floatingInput">Action </label>
+                      </div>
+                    </th>
+                  </tr>
+                </tfoot> -->
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="payment_detail_modal" class="modal fade" data-bs-backdrop="static" data-keyboard="false" tabindex="-1"
+  role="dialog" aria-labelledby="detail_transaction_modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="detail_transaction_modalLabel">View payment detail.</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <!-- <div class="continer mt-1">
+        <div class="row">
+          <div class="row d-flex justify-content-end">
+            <button class="btn btn-primary" style="width: fit-content" (click)="addPayment()"
+              [disabled]="paymentFinished">
+              Add Payment
+            </button>
+          </div>
+        </div>
+      </div> -->
+      <div class="d-none" id="lalksdf6a5s4d6ffas"></div>
+      <div class="row" style="padding-left: 3%; padding-right: 3%;">
+        <table datatable [dtOptions]="dtOptions_payment_deatil" id="view_detail"
+          class="table table-bordered dt-responsive w-100">
+          <tfoot>
+            <tr>
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" [ngModel]="input_payment_0" id="{{ first_payment_column_id }}"
+                    name="search-id" class="form-control {{ first_payment_column_id }} _id" />
+                  <label for="floatingInput">Id</label>
+                </div>
+              </th>
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ second_payment_column_id }}" name="search-first-name"
+                    [ngModel]="input_payment_1" class="form-control {{ second_payment_column_id }} _firstname" />
+
+                  <label for="floatingInput">Payment date</label>
+                </div>
+              </th>
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ third_payment_column_id }}" name="search-last-name"
+                    [ngModel]="input_payment_2" class="form-control {{ third_payment_column_id }} _middlename" />
+
+                  <label for="floatingInput"> Paid amount</label>
+                </div>
+              </th>
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ fourth_payment_column_id }}" name="search-last-name"
+                    [ngModel]="input_payment_3" class="form-control {{ fourth_payment_column_id }} _lastname" />
+
+                  <label for="floatingInput">Confirmation document</label>
+                </div>
+              </th>
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ fifth_payment_column_id }}" name="search-last-name"
+                    [ngModel]="input_payment_4" class="form-control {{ fifth_payment_column_id }} _gender" />
+
+                  <label for="floatingInput"> Next payment date </label>
+                </div>
+              </th>
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ sixth_payment_column_id }}" name="search-last-name"
+                    [ngModel]="input_payment_5" class="form-control {{ sixth_payment_column_id }} _role" />
+
+                  <label for="floatingInput">Amount per contigency</label>
+                </div>
+              </th>
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ seventh_payment_column_id }}" name="search-last-name"
+                    [ngModel]="input_payment_6" class="form-control {{ seventh_payment_column_id }} _email" />
+
+                  <label for="floatingInput">Payment description</label>
+                </div>
+              </th>
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ eighth_payment_column_id }}" name="search-last-name"
+                    [ngModel]="input_payment_7" class="form-control {{
+                          eighth_payment_column_id
+                        }} _phonenumber" />
+
+                  <label for="floatingInput">Payment contigency </label>
+                </div>
+              </th>
+
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ ninth_payment_column_id }}" name="search-last-name"
+                    [ngModel]="input_payment_8" class="form-control {{
+                          ninth_payment_column_id
+                        }} _phonenumber" />
+
+                  <label for="floatingInput">Payment frequency </label>
+                </div>
+              </th>
+
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ tenth_payment_column_id }}" name="search-last-name"
+                    [ngModel]="input_payment_9" class="form-control {{
+                          tenth_payment_column_id
+                        }} _phonenumber" />
+
+                  <label for="floatingInput">Unpaid amount </label>
+                </div>
+              </th>
+
+              <!-- 
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ eleventh_payment_column_id }}" name="search-last-name"
+                    [ngModel]="input_payment_10" class="form-control {{
+                          eleventh_payment_column_id
+                        }} _phonenumber" />
+
+                  <label for="floatingInput">Unpaid amount </label>
+                </div>
+              </th> -->
+
+              <th>
+                <div class="form-floating">
+                  <input type="text" id="floatingInput" id="{{ twelveth_payment_column_id }}" name="search-last-name"
+                    [disabled]="true" class="form-control {{
+                          twelveth_payment_column_id
+                        }} _phonenumber" />
+
+                  <label for="floatingInput">status </label>
+                </div>
+              </th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <br>
+      <!-- <div style="text-align: center;" *ngFor="let reas of reasonEditDelete" id="cleardata">
+          <p><span><b>Reason : </b> {{reas.reason}}</span>,&nbsp;&nbsp;&nbsp;
+            <span><b>Action By : </b> {{reas.by}}</span>,&nbsp;&nbsp;&nbsp;
+            <span><b>Date : </b> {{reas.date}}</span>
+          </p>
+        </div> -->
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="reason_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Please enter title and description of {{reason}} reason</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form class="ps-3 pe-3" (ngSubmit)="onSubmitReason()" [formGroup]="reasonForm">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input class="form-control" type="text" id="title" placeholder="Title" formControlName="title"
+              autocomplete="off">
+            <div class="valid-feedback" *ngIf="
+                    submitted && reasonForm.controls['title'].valid
+                  ">
+              Looks good!
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && reasonForm.controls['title'].errors?.['required']">
+              Please enter title.
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && reasonForm.controls['title'].errors?.['minlength']">
+              At least 2 Characters.
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && reasonForm.controls['title'].errors?.['maxlength']">
+              At most 30 Characters.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <quill-editor class="form-control" type="text" id="description" placeholder="Description"
+              formControlName="description"></quill-editor>
+            <div class="valid-feedback" *ngIf="submitted && reasonForm.controls['description'].valid">
+              Looks good!
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && reasonForm.controls['description'].errors?.['required']">
+              Please enter description for {{reason}} reason.
+            </div>
+          </div>
+          <div class="mb-3 text-center modal-footer">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<div id="reject-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Please enter title and description</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form class="ps-3 pe-3" (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input class="form-control" type="text" id="title" placeholder="Title" formControlName="title"
+              autocomplete="off">
+            <div class="valid-feedback" *ngIf="
+                    submitted && registerForm.controls['title'].valid
+                  ">
+              Looks good!
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && registerForm.controls['title'].errors?.['required']">
+              Please enter title.
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && registerForm.controls['title'].errors?.['minlength']">
+              At least 2 Characters.
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && registerForm.controls['title'].errors?.['maxlength']">
+              At most 30 Characters.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <quill-editor class="form-control" type="text" id="description" placeholder="Description"
+              formControlName="description"></quill-editor>
+            <div class="valid-feedback" *ngIf="submitted && registerForm.controls['description'].valid">
+              Looks good!
+            </div>
+            <div class="invalid-feedback"
+              *ngIf="submitted && registerForm.controls['description'].errors?.['required']">
+              Please enter description for rejecting reason.
+            </div>
+          </div>
+          <div class="mb-3 text-center modal-footer">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<div id="view_remark_modal" class="modal fade" data-bs-backdrop="static" data-keyboard="false" tabindex="-1"
+  role="dialog" aria-labelledby="view_remark_modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="view_remark_modalLabel"
+          style="color:black;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+          <i class="uil-comments text-primary">View Remarks</i>
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="row"></div>
+      <div style="margin-left:5%;margin-right:5%;">
+        <table datatable [dtOptions]="dtOptions_view_remarks" id="view_pool_remark"
+          class="table table-bordered dt-responsive nowrap w-100">
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="edit_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-xl" style="width:auto;">
+    <div class="modal-content" style="width: max-content;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> If you want to manage your coment, It is possible to use below
+          options.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form class="ps-3 pe-3" [formGroup]="editForm">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input class="form-control" type="text" id="title" placeholder="Title" formControlName="title"
+              [(ngModel)]="remark.title" autocomplete="off">
+            <div class="valid-feedback" *ngIf="
+                    submitted && editForm.controls['title'].valid
+                  ">
+              Looks good!
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && editForm.controls['title'].errors?.['required']">
+              Please enter title.
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && editForm.controls['title'].errors?.['minlength']">
+              At least 2 Characters.
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && editForm.controls['title'].errors?.['maxlength']">
+              At most 30 Characters.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <quill-editor class="form-control" type="text" id="description" placeholder="Description"
+              formControlName="description" [(ngModel)]="remark.description"></quill-editor>
+            <div class="valid-feedback" *ngIf="submitted && editForm.controls['description'].valid">
+              Looks good!
+            </div>
+            <div class="invalid-feedback" *ngIf="submitted && editForm.controls['description'].errors?.['required']">
+              Please enter description for rejecting reason.
+            </div>
+          </div>
+          <div class="mb-3 text-center modal-footer">
+            <button class="btn btn-primary" type="submit" (click)="delete()">Delete</button>
+            <button class="btn btn-primary" type="submit" (click)="update()">Edit</button>
+          </div>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<div id="add-payment" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" style="background-color:green;">
+    <div class="modal-content" style="background-color:whitesmoke;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add payment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form (ngSubmit)="paymentSubmit()" [formGroup]="paymentForm">
+
+          <div class="row">
+            <div class="mb-3 col-sm-6">
+              <label for="start_date" class="form-label">Paid Date</label>
+              <div class="input-group">
+                <input type="text" placeholder="enter paid date" class="form-control" autocomplete="off"
+                  id="floatingInput" bsDatepicker formControlName="paid_date" [bsConfig]="{adaptivePosition: true }" />
+              </div>
+              <div class="invalid-feedback"
+                *ngIf=" submitted  && paymentForm.controls['paid_date'].errors?.['required']">
+                Please enter Paid Date.
+              </div>
+            </div>
+
+
+            <div class="mb-3 col-sm-6">
+              <label for="industry" class="form-label">Piad Amount</label>
+              <div class="input-group">
+                <input class="form-control" type="number" id="total_amount" formControlName="paid_amount"
+                  placeholder="enter paid amount" autocomplete="off" />
+              </div>
+              <div class="invalid-feedback"
+                *ngIf=" submitted  && paymentForm.controls['paid_amount'].errors?.['required']">
+                Please enter Paid Amount.
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="mb-3 col-sm-12">
+                <label for="renewal_option" class="form-label">Payment Description
+                </label>
+                <div class="form-group mt-10">
+                  <quill-editor [placeholder]="'any payment description write here'"
+                    formControlName="payment_description" style="width:100%;background-color: white;"></quill-editor>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="mb-3 col-sm-12">
+                <label for="general_document" class="form-label">Payment
+                  Confirmation Document</label>
+                <div class="form-floating">
+                  <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload" accept="application/pdf"
+                    [processDirectoryDrop]="false" [ngClass]="{
+                            'light-ngx-dropzone':
+                              this.localStorageService.retrieve('theme').trim() ==
+                              'light'.trim(),
+                            'dark-ngx-dropzone':
+                              this.localStorageService.retrieve('theme').trim() !=
+                              'light'.trim()
+                          }" (change)="onConfirmationFileSelect($event)" [multiple]="true" [maxFileSize]="8000000">
+                    <ngx-dropzone-label>
+                      <i class="h1 text-muted dripicons-cloud-upload"></i>
+                      <h3>Select file.</h3>
+                      <span class="text-muted font-13">Attach payment confirmation document
+
+                      </span>
+                    </ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngFor="let f of confirmationDocument" [removable]="true"
+                      (removed)="onRemoveConfirmationDocument(confirmationDocument)">
+                      <ngx-dropzone-label>{{
+                        confirmationDocument.at(0)!.name
+                        }}</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                  </ngx-dropzone>
+                </div>
+                <div class="invalid-feedback" *ngIf=" submitted  && confirmation==false">
+                  Please Attach paid confirmation document.
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+
+              <div class="mb-3 col-sm-4">
+                <label for="Payment_status" class="form-label">Payment Contigency</label>
+                <div class="input-group">
+                  <select class="form-select" formControlName="payment_contigency">
+                    <option value="aaaaaaa" selected>Please select menu</option>
+                    <option value="penality">Penality </option>
+                    <option value="incentive">Incentive</option>
+                    <option value="adjustment">Adjustment</option>
+                  </select>
+                </div>
+              </div>
+
+
+
+              <div class="mb-3 col-sm-6">
+                <label for="amount_per_frequency" class="form-label">Amount pre contigency
+                  frequency</label>
+                <div class="input-group">
+                  <input class="form-control" type="number" id="amount_per_frequency"
+                    formControlName="amount_per_contigency" placeholder="amount per contigency" autocomplete="off" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 text-center">
+            <button class="btn btn-success" style="margin-left:5%;" type="submit">
+              Submit
+            </button>
+            <!-- <button *ngIf="contract_id != null" class="btn btn-primary" style="margin-left: 30%;" type="submit">
+                  Update
+                </button> -->
+          </div>
+
+        </form>
+
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+
+<div id="detail_history_modal" class="modal fade" data-bs-backdrop="static" data-keyboard="false" tabindex="-1"
+  role="dialog" aria-labelledby="detail_transaction_modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="detail_transaction_modalLabel">View detail history of contract id {{contract_id}}.
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+      </div>
+      <div class="d-none" id="lalksdf6a5s4d6ffas"></div>
+      <div class="row" style="padding-left: 3%; padding-right: 3%;">
+        <table datatable [dtOptions]="dtOptions_deatil_history" id="view_detail_history"
+          class="table table-bordered dt-responsive w-100">
+
+        </table>
+      </div>
+      <br>
+      <!-- <div style="text-align: center;" *ngFor="let reas of reasonEditDelete" id="cleardata">
+        <p><span><b>Reason : </b> {{reas.reason}}</span>,&nbsp;&nbsp;&nbsp;
+          <span><b>Action By : </b> {{reas.by}}</span>,&nbsp;&nbsp;&nbsp;
+          <span><b>Date : </b> {{reas.date}}</span>
+        </p>
+      </div> -->
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="renewal_contract" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background-color:whitesmoke;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{reason}} Contract</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row" *ngIf="extend_renew">
+          <p class="text-center text-primary"><i class="mdi mdi-check text-success"></i>The following data is before
+            {{reason}}</p>
+          <div class="mb-3 col-sm-6">
+            <label for="start_date" class="form-label text-primary">Contract End Date:</label>
+            <div class="input-group">
+              {{pre_end_date}}
+            </div>
+          </div>
+          <div class="mb-3 col-sm-6">
+            <label for="start_date" class="form-label text-primary">Contract Total Amount:</label>
+            <div class="input-group">
+              {{pre_total_amount | number: '1.0-0'}}
+            </div>
+          </div>
+          <div class="mb-3 col-sm-12" *ngIf="reason=='Renewal' && pre_contract_document_document !=null">
+            <label for="start_date" class="form-label text-primary">Contract Document:</label>
+            <div class="input-group">
+              <button class="btn btn-secondary" (click)="download()"><i class="mdi mdi-download"></i>
+                Download Contract Document
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-3 col-sm-12" *ngIf="reason=='Renewal' && pre_contract_document_document ==null">
+            <label for="start_date" class="form-label text-primary">Contract Document:</label>
+            <div class="input-group">
+              Contract document not uploaded.
+            </div>
+          </div>
+        </div>
+        <hr>
+        <p class="text-center text-primary"><i class="mdi mdi-check text-success"></i>The following data is {{reason}}
+          request</p>
+        <hr>
+
+        <form (ngSubmit)="ContractSubmit()" [formGroup]="contractRenewalForm">
+
+          <div class="row">
+            <div class="mb-3 col-sm-6">
+              <label for="start_date" class="form-label">{{reason}} Date</label>
+              <div class="input-group">
+                <input type="text" placeholder="enter {{reason}} date" class="form-control" autocomplete="off"
+                  id="floatingInput" bsDatepicker formControlName="start_date" [bsConfig]="{adaptivePosition: true }" />
+              </div>
+              <div class="invalid-feedback"
+                *ngIf=" submitted  && contractRenewalForm.controls['start_date'].errors?.['required']">
+                Please enter {{reason}} Date.
+              </div>
+            </div>
+
+
+            <div class="mb-3 col-sm-6">
+              <label for="start_date" class="form-label"> Contract End Date:</label>
+              <div class="input-group">
+                <input type="text" placeholder="enter end date" class="form-control" autocomplete="off"
+                  id="floatingInput" bsDatepicker formControlName="end_date" [bsConfig]="{adaptivePosition: true }" />
+              </div>
+              <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                  var inputElement = document.getElementById('floatingInput');
+                  inputElement.setAttribute('readonly', 'true');
+                });
+              </script>
+              <div class="invalid-feedback"
+                *ngIf=" submitted  && contractRenewalForm.controls['end_date'].errors?.['required']">
+                Please enter End Date.
+              </div>
+            </div>
+
+            <div class="mb-3 col-sm-12"
+              *ngIf="reason=='Renewal' && extend_renew && renew_contract_document_document==null">
+              <label for="start_date" class="form-label text-primary">Contract Document:</label>
+              <div class="input-group">
+                The Maker did not upload Contract Document during sent renewal request.
+              </div>
+            </div>
+
+            <div class="row" *ngIf="reason === 'Renewal' && !extend_renew">
+              <div class="mb-3 col-sm-12">
+                <label for="general_document" class="form-label">Contract Document</label>
+                <div class="form-floating">
+                  <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload" accept="application/pdf"
+                    [processDirectoryDrop]="false" [ngClass]="{
+                            'light-ngx-dropzone':
+                              this.localStorageService.retrieve('theme').trim() ==
+                              'light'.trim(),
+                            'dark-ngx-dropzone':
+                              this.localStorageService.retrieve('theme').trim() !=
+                              'light'.trim()
+                          }" (change)="onContractDocumentFileSelect($event)" [multiple]="true" [maxFileSize]="8000000">
+                    <ngx-dropzone-label>
+                      <i class="h1 text-muted dripicons-cloud-upload"></i>
+                      <h3>Select file.</h3>
+                      <span class="text-muted font-13">Attach Contract Document
+
+                      </span>
+                    </ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngFor="let f of confirmationDocument" [removable]="true"
+                      (removed)="onRemoveContractDocument(confirmationDocument)">
+                      <ngx-dropzone-label>{{
+                        confirmationDocument.at(0)!.name
+                        }}</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                  </ngx-dropzone>
+                </div>
+                <div class="invalid-feedback" *ngIf=" submitted  && confirmation==false">
+                  Please Attach Contract document.
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+
+
+              <div class="mb-3 col-sm-12">
+                <label for="amount_per_frequency" class="form-label">Total Contract Amount:</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" id="amount_per_frequency" formControlName="total_amount"
+                    placeholder="Total Contract Amount  " autocomplete="off" appCommaSeparate readonly />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 text-center">
+            <button class="btn btn-success" type="submit" *ngIf="!extend_renew">
+              Submit
+            </button>
+            <!-- <button *ngIf="contract_id != null" class="btn btn-primary" style="margin-left: 30%;" type="submit">
+                  Update
+                </button> -->
+          </div>
+
+        </form>
+        <div class="row">
+          <div class="mb-3 col-sm-12"
+            *ngIf="reason=='Renewal' && extend_renew && renew_contract_document_document!=null">
+            <label for="start_date" class="form-label text-primary">Contract Document:</label>
+            <div class="input-group">
+              <button class="btn btn-secondary" (click)="download_view()"><i class="mdi mdi-download"></i>
+                Contract Document for renewal
+              </button>
+            </div>
+          </div>
+          <div class="mb-3 col-sm-6" *ngIf="extend_renew">
+            <button class="btn btn-success" (click)="ContractSubmit()"><i class="mdi mdi-"></i>
+              Accept {{reason}} Request
+            </button>
+          </div>
+
+          <div class="mb-3 col-sm-6" *ngIf="extend_renew">
+            <button class="btn btn-danger" (click)="Reject()"><i class="mdi mdi-"></i>
+              Reject {{reason}} Request
+            </button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<swal #SuccessSwalRegisterVendor title="Success" text="Request Accept successfully!" icon="success"
+  [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SuccessSwalUpdateVendor title="Success" text="Request Accept successfully!" icon="success"
+  [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+<swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+  [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+</swal>

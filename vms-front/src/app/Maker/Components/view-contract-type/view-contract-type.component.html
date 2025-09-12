@@ -1,0 +1,110 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <app-navigator-upper></app-navigator-upper>
+            <h4 class="page-title">Contract Type</h4>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">Contract Type List</h4>
+                    <div class="continer mb-4">
+                        <div class="row">
+                            <div class="row d-flex justify-content-end">
+                                <button class="btn btn-primary" style="width: fit-content"
+                                    (click)="goToPage('maker/add-contract-type')">
+                                    Add Contract Type
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <table datatable [dtOptions]="dtOptions" id="contract_type_table"
+                                class="table table-bordered dt-responsive nowrap w-100">
+                                <tfoot>
+                                    <tr style="border-top: none !important">
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" [ngModel]="input_0"
+                                                    id="{{ first_column_id }}" name="search-id"
+                                                    class="form-control {{ first_column_id }} _id" />
+                                                <label for="floatingInput">Id</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ second_column_id }}"
+                                                    name="search-name" [ngModel]="input_1"
+                                                    class="form-control {{ second_column_id }} name" />
+
+                                                <label for="floatingInput">Contract Type </label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ third_column_id }}"
+                                                    name="search-description" [ngModel]="input_2"
+                                                    class="form-control {{ third_column_id }} description" />
+
+                                                <label for="floatingInput">Description</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ fourth_column_id }}"
+                                                    name="search-date" [ngModel]="input_3"
+                                                    class="form-control {{ fourth_column_id }} date" />
+
+                                                <label for="floatingInput">created date</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ fifth_column_id }}"
+                                                    name="search-created_by" [ngModel]="input_4"
+                                                    class="form-control {{ fifth_column_id }} created_by" />
+
+                                                <label for="floatingInput">Created by</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ tenth_column_id }}"
+                                                    name="search-last-name" [disabled]="true"
+                                                    class="form-control {{ tenth_column_id }} _status" />
+
+                                                <label for="floatingInput">Status</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ eleventh_column_id }}"
+                                                    name="search-last-name" [disabled]="true" class="form-control {{
+                              eleventh_column_id
+                            }} _change_status" />
+
+                                                <label for="floatingInput">Change Status</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="form-floating">
+                                                <input type="text" id="floatingInput" id="{{ twelfth_column_id }}"
+                                                    name="search-last-name" [disabled]="true"
+                                                    class="form-control {{ twelfth_column_id }} _action" />
+
+                                                <label for="floatingInput">Action</label>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+</swal>

@@ -1,0 +1,280 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <app-navigator-upper></app-navigator-upper>
+            <h4 *ngIf="licence_id == null" class="page-title">Register Licence</h4>
+            <h4 *ngIf="licence_id != null" class="page-title">Update Licence</h4>
+            <div class="card">
+                <div class="card-body">
+                    <div class="continer">
+                        <table datatable [dtOptions]="dtOptions_currentLicence" id="current_contract"
+                            class="table table-bordered dt-responsive nowrap w-100">
+                        </table>
+                        <p class="text-center">Requested by <b>{{requested_by}}</b> on <b>{{request_date}}</b></p>
+                        <div class="row">
+                            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+
+                                <div class="row">
+
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="vendor" class="form-label">
+                                            <b>Vendor </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <div class="form-group">
+                                            <select formControlName="vendor_id" class="form-select"
+                                                (change)="onVendorSelectionChange()">
+                                                <option *ngFor="let vendor of vendor" [value]="vendor.id">{{
+                                                    vendor.name }}
+
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['vendor_id'].errors?.['required']">
+                                            Please Select Vendor.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="contract_type" class="form-label">
+                                            <b>contract </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <div class="form-group">
+                                            <select class="form-select" formControlName="contract_id">
+                                                <option *ngIf="contract.length === 0" disabled selected>Vendor has
+                                                    no contract </option>
+                                                <option *ngIf="contract.length === 1">select contract </option>
+                                                <option *ngFor="let contract of contract" [value]="contract.id">
+                                                    <div innerHtml="{{contract.contract_title}}"></div>
+
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['contract_id'].errors?.['required']">
+                                            Please Select Contract Type.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="directorate" class="form-label">
+                                            <b>product/service name </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <input id="product_service_name" type="text" class="form-control"
+                                            formControlName="product_service_name"
+                                            placeholder="Enter product/service name" />
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['product_service_name'].errors?.['required']">
+                                            Please Select directorate.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="directorate" class="form-label">
+                                            <b>Licence quantity </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <input id="licence_quantity" type="number" class="form-control"
+                                            formControlName="licence_quantity" placeholder="Enter licence quantity" />
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['licence_quantity'].errors?.['required']">
+                                            Please Select directorate.
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="vendor" class="form-label">
+                                            <b>product category </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <div class="form-group">
+                                            <select formControlName="product_category" class="form-select">
+                                                <option *ngFor="let productCategory of productCategory"
+                                                    [value]="productCategory.name">{{
+                                                    productCategory.name }}
+
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['vendor_id'].errors?.['required']">
+                                            Please Select product category.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="vendor" class="form-label">
+                                            <b>licence type </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <div class="form-group">
+                                            <select formControlName="licence_type" class="form-select">
+                                                <option value="Perpetual">Perpetual</option>
+                                                <option value="Subscription">Subscription</option>
+                                                <option value="OEM">OEM</option>
+                                                <option value="site licence">Site licence</option>
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['vendor_id'].errors?.['required']">
+                                            Please Select product category.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="start_date" class="form-label">
+                                            <b>licence start date </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" placeholder="licence start date" class="form-control"
+                                                autocomplete="off" id="floatingInput1" bsDatepicker
+                                                formControlName="start_date"
+                                                [bsConfig]="{adaptivePosition: true, dateInputFormat: 'MM/DD/YYYY' }" />
+                                            <!-- <label for="floatingInput">Transaction Date</label> -->
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['start_date'].errors?.['required']">
+                                            Please Entere licence Start Date.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="expiry_date" class="form-label">
+                                            <b>licence expiry date </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" placeholder="licence expiry date" class="form-control"
+                                                autocomplete="off" id="floatingInput2" bsDatepicker
+                                                formControlName="expiry_date"
+                                                [bsConfig]="{adaptivePosition: true, dateInputFormat: 'MM/DD/YYYY' }" />
+                                            <!-- <label for="floatingInput">Transaction Date</label> -->
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['expiry_date'].errors?.['required']">
+                                            Please Entere licence expiry Date.
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="renewal_date" class="form-label">
+                                            <b>licence renewal date </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" placeholder="licence renewal date" class="form-control"
+                                                autocomplete="off" id="floatingInput" bsDatepicker
+                                                formControlName="renewal_date"
+                                                [bsConfig]="{adaptivePosition: true, dateInputFormat: 'MM/DD/YYYY' }"
+                                                (click)="AutoFillDate()" />
+                                            <!-- <label for="floatingInput">Transaction Date</label> -->
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['renewal_date'].errors?.['required']">
+                                            Please Entere licence renewal Date.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-sm-3">
+                                        <label for="total_cost" class="form-label">
+                                            <b>Total licence cost </b> <span style="color: red;">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" id="total_amount"
+                                                formControlName="total_cost" placeholder="Total licence cost"
+                                                autocomplete="off" appCommaSeparate />
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf=" submitted  && registerForm.controls['total_cost'].errors?.['required']">
+                                            Please Entere Contract Total Amount.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-sm-6">
+                                        <label for="support_period" class="form-label">
+                                            <b>Support Period</b> <span style="color: red;">*</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" placeholder="Select support period" class="form-control"
+                                                autocomplete="off" bsDaterangepicker formControlName="support_period"
+                                                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false }"
+                                                [minDate]="minDate" [maxDate]="maxDate" (click)="onDateChange()" />
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="submitted && registerForm.controls['support_period'].errors?.['required']">
+                                            Please Select support period.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="mb-3 col-sm-6">
+
+                                        <label for="additional_information" class="form-label">
+                                            <b>additional information </b>
+                                        </label>
+                                        <div class="form-group mt-10">
+                                            <quill-editor [placeholder]="'Contract title'"
+                                                formControlName="additional_info" style="width:100%"></quill-editor>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-sm-6">
+                                        <label for="general_document" class="form-label">Licence contract Document
+                                        </label>
+                                        <div class="form-floating">
+                                            <ngx-dropzone [disabled]="false" id="ngx-dropzone-upload"
+                                                accept="application/pdf" [processDirectoryDrop]="false" [ngClass]="{
+                                                    'light-ngx-dropzone':
+                                                      this.localStorageService.retrieve('theme').trim() ==
+                                                      'light'.trim(),
+                                                    'dark-ngx-dropzone':
+                                                      this.localStorageService.retrieve('theme').trim() !=
+                                                      'light'.trim()
+                                                  }" (change)="onContractFileSelect($event)" [multiple]="true"
+                                                [maxFileSize]="8000000">
+                                                <ngx-dropzone-label>
+                                                    <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                    <h3>Select file.</h3>
+                                                    <span class="text-muted font-13">Attach Contract document
+
+                                                    </span>
+                                                </ngx-dropzone-label>
+                                                <ngx-dropzone-preview *ngFor="let f of files" [removable]="true"
+                                                    (removed)="onRemoveContractDocument(files)">
+                                                    <ngx-dropzone-label>{{
+                                                        files.at(0)!.name
+                                                        }}</ngx-dropzone-label>
+                                                </ngx-dropzone-preview>
+                                            </ngx-dropzone>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 d-flex">
+                                    <button *ngIf="licence_id == null" class="btn btn-primary ms-auto" type="submit">
+                                        Submit </button>
+                                    <button *ngIf="licence_id != null && role_name == 'Maker'"
+                                        class="btn btn-primary ms-auto" type="submit">
+                                        Update </button>
+
+                                    <button *ngIf="licence_id != null && role_name == 'Checker'"
+                                        class="btn btn-danger ms-auto" type="submit">
+                                        Reject request </button>
+                                    <button *ngIf="licence_id != null && role_name == 'Checker'"
+                                        class="btn btn-success ms-auto" type="submit">
+                                        Approve request </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<swal #SuccessSwalRegisterVendor title="Success" text="Request sent successfully!" icon="success"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SuccessSwalUpdateVendor title="Success" text="licence updated successfully!" icon="success"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="2500" [focusCancel]="true"></swal>
+
+<swal #SwalSessionExpired title="Warning" text="Your session has expired! please login to continue." icon="warning"
+    [showCancelButton]="false" [showConfirmButton]="false" [timer]="3500" [focusCancel]="true">
+</swal>

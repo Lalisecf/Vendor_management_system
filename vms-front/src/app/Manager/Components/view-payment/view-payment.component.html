@@ -1,0 +1,248 @@
+<div class="container mt-4">
+  <div class="card shadow-lg p-4 rounded-3 border-0">
+    <div class="card-body">
+      <h2 class="text-left text-primary mb-4">
+        <i class="mdi mdi-credit-card-check"></i> Payment Detail
+      </h2>
+
+      <div class="row">
+        <!-- Vendor Selection -->
+        <div class="mb-3 col-sm-6">
+          <label for="vendor" class="form-label">
+            <i class="mdi mdi-domain text-warning"></i> Vendor <span class="text-danger">*</span>
+          </label>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Please search the required Vendor here!"
+              (input)="filterVendors($event)" formControlName="searchIn" />
+            <select formControlName="vendorId" class="form-select" (change)="onVendorChange($event)">
+              <option [ngValue]="null" disabled selected style="background-color: orange; color: white;">
+                Please Select the required Vendor
+              </option>
+              <option *ngFor="let vendor of filteredVendors" [value]="vendor.id">
+                {{ vendor.name }}
+              </option>
+            </select>
+          </div>
+          <div class="invalid-feedback" *ngIf="submitted && registerForm.controls['vendorId'].errors?.['required']">
+            Please Select Vendor.
+          </div>
+        </div>
+
+        <!-- Contract Selection -->
+        <div class="mb-3 col-md-6">
+          <label for="contract" class="form-label fw-bold">
+            <i class="mdi mdi-file-document text-warning"></i> Contract <span class="text-danger">*</span>
+          </label>
+          <select formControlName="contractId" class="form-select" (change)="onContractChange($event)">
+            <option [ngValue]="null" disabled selected class="bg-warning text-white">
+              Select a Contract
+            </option>
+            <option *ngFor="let contract of contract" [value]="contract.id">
+              <div innerHtml="{{contract.contract_title}}"></div>
+            </option>
+          </select>
+          <div class="invalid-feedback" *ngIf="submitted && registerForm.controls['contractId'].errors?.['required']">
+            Please Select a Contract.
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Toggle Buttons -->
+      <div class="mb-3 d-flex gap-3">
+        <button class="btn btn-outline-primary d-flex align-items-center" (click)="toggleSummary()"
+          [disabled]="!vendorSelected || !contractSelected"> <i class="mdi mdi-file-chart me-2 fs-5"></i> Summary
+        </button>
+
+
+
+        <button class="btn btn-outline-warning d-flex align-items-center" (click)="toggleAddendumSummary()"
+          [disabled]="this['addedumscheduled_amount'] === 0.00">
+          <i class="mdi mdi-file-document-box-multiple-outline me-2 fs-5"></i> Addendum Summary
+        </button>
+      </div>
+
+      <div class="row mt-4">
+        <table datatable [dtOptions]="dtOptions" id="payments_by_contId"
+          class="table table-bordered dt-responsive nowrap w-100">
+        </table>
+      </div>
+
+      <!-- Payment Summary -->
+      <div *ngIf="viewPaymentSummary" class="card shadow-lg rounded-4 border-0 mt-3">
+        <div
+          class="card-header bg-gradient-primary text-white fw-bold d-flex align-items-center p-3 rounded-top bg-primary">
+          <i class="mdi mdi-cash-multiple me-2 fs-4"></i>
+          <span class="text-info">
+            Payment Summary for <span class="text-warning ms-2 fw-bold" [innerHTML]="cont.contract_title"></span>
+          </span>
+        </div>
+
+        <div class="card-body p-4">
+          <div class="row g-3">
+            <!-- Left Column -->
+            <div class="col-md-6">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-currency-usd me-2 text-primary"></i>
+                  <span class="fw-bold">Total Amount:</span>
+                  <span class="badge bg-primary fs-6">{{ cont.total_amount | number:'1.0-2' }} {{ cont.currency
+                    }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-calendar-clock me-2 text-secondary"></i>
+                  <span class="fw-bold">Scheduled Amount:</span>
+                  <span class="badge bg-secondary fs-6">{{ scheduled_amount | number:'1.0-2' }} {{ cont.currency
+                    }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-calendar-remove me-2 text-danger"></i>
+                  <span class="fw-bold">Unscheduled Amount:</span>
+                  <span class="badge bg-danger fs-6">{{ cont.total_amount - scheduled_amount | number:'1.0-2' }} {{
+                    cont.currency }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-check-circle me-2 text-warning"></i>
+                  <span class="fw-bold">Processed Amount:</span>
+                  <span class="badge bg-warning fs-6">{{ processed_amount | number:'1.0-2' }} {{ cont.currency }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-cancel me-2 text-danger"></i>
+                  <span class="fw-bold">Rejected Amount:</span>
+                  <span class="badge bg-danger text-light fs-6">{{ rejected_amount | number:'1.0-2' }} {{ cont.currency
+                    }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-cash-check me-2 text-success"></i>
+                  <span class="fw-bold">Total Paid Amount:</span>
+                  <span class="badge bg-success text-light fs-6">{{ paid_amount | number:'1.0-2' }} {{ cont.currency
+                    }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-account-tie me-2 text-primary"></i>
+                  <span class="fw-bold">Under Manager Review:</span>
+                  <span class="badge bg-primary text-white fs-6">{{ manager_amount | number:'1.0-2' }} {{ cont.currency
+                    }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-account-tie-outline me-2 text-info"></i>
+                  <span class="fw-bold">Under Director Review:</span>
+                  <span class="badge bg-info text-white fs-6">{{ director_amount | number:'1.0-2' }} {{ cont.currency
+                    }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-account-star me-2 text-primary"></i>
+                  <span class="fw-bold">Under Senior IT Chief Review:</span>
+                  <span class="badge bg-primary text-white fs-6">{{ chief_amount | number:'1.0-2' }} {{ cont.currency
+                    }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-cash-register me-2 text-info"></i>
+                  <span class="fw-bold">Under Finance Review:</span>
+                  <span class="badge bg-info text-white fs-6">{{ finance_amount | number:'1.0-2' }} {{ cont.currency
+                    }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="mdi mdi-alert-circle me-2 text-dark"></i>
+                  <span class="fw-bold">Amount Difference (Scheduled - Processed):</span>
+                  <span class="badge bg-dark text-white fs-6">{{ scheduled_amount - processed_amount | number:'1.0-2' }}
+                    {{ cont.currency }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Addendum Summary -->
+      <div *ngIf="viewAddendumPaymentSummary" class="card shadow-lg rounded-4 border-0 mt-3">
+        <p class="text-primary">Addendum Payment</p>
+        <div class="row">
+          <!-- Left Column -->
+          <div class="col-md-6">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-currency-usd me-2 text-primary"></i>
+                <span class="fw-bold">Total Amount:</span>
+                <span class="badge bg-primary px-3 py-2 fs-6">{{ cont_addendum.total_amount | number:'1.0-2' }} {{
+                  cont_addendum.currency }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-calendar-clock me-2 text-secondary"></i>
+                <span class="fw-bold">Scheduled Amount:</span>
+                <span class="badge bg-secondary px-3 py-2 fs-6">{{ addedumscheduled_amount | number:'1.0-2' }} {{
+                  cont_addendum.currency }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-calendar-remove me-2 text-danger"></i>
+                <span class="fw-bold">Un Scheduled Amount:</span>
+                <span class="badge bg-danger px-3 py-2 fs-6">{{ cont_addendum.total_amount - addedumscheduled_amount |
+                  number:'1.0-2' }} {{ cont_addendum.currency }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-check-circle me-2 text-warning"></i>
+                <span class="fw-bold">Processed Amount:</span>
+                <span class="badge bg-warning px-3 py-2 fs-6">{{ addedumprocessed_amount | number:'1.0-2' }} {{
+                  cont_addendum.currency }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-cancel me-2 text-danger"></i>
+                <span class="fw-bold">Rejected Amount:</span>
+                <span class="badge bg-danger text-light px-3 py-2 fs-6">{{ addedumrejected_amount | number:'1.0-2' }} {{
+                  cont_addendum.currency }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-cash-check me-2 text-success"></i>
+                <span class="fw-bold">Total Paid Amount:</span>
+                <span class="badge bg-success px-3 py-2 fs-6">{{ addedumpaid_amount | number:'1.0-2' }} {{
+                  cont_addendum.currency }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right Column -->
+          <div class="col-md-6">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-account-tie me-2 text-primary"></i>
+                <span class="fw-bold">Under Manager Review:</span>
+                <span class="badge bg-primary text-white px-3 py-2 fs-6">{{ addedummanager_amount | number:'1.0-2' }} {{
+                  cont_addendum.currency }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-account-tie-outline me-2 text-info"></i>
+                <span class="fw-bold">Under Director Review:</span>
+                <span class="badge bg-info text-dark px-3 py-2 fs-6">{{ addedumdirector_amount | number:'1.0-2' }} {{
+                  cont_addendum.currency }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-account-star me-2 text-primary"></i>
+                <span class="fw-bold">Under Senior IT Chief Review:</span>
+                <span class="badge bg-primary text-light px-3 py-2 fs-6">{{ addedumchief_amount | number:'1.0-2' }} {{
+                  cont_addendum.currency }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-cash-register me-2 text-info"></i>
+                <span class="fw-bold">Under Finance Review:</span>
+                <span class="badge bg-info px-3 py-2 fs-6">{{ addedumfinance_amount | number:'1.0-2' }} {{
+                  cont_addendum.currency }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <i class="mdi mdi-alert-circle me-2 text-danger"></i>
+                <span class="fw-bold">Amount Difference (Scheduled - Processed):</span>
+                <span class="badge bg-dark px-3 py-2 fs-6">{{ addedumscheduled_amount - addedumprocessed_amount |
+                  number:'1.0-2' }} {{ cont_addendum.currency }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
